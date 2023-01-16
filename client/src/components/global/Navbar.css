@@ -1,0 +1,17 @@
+#navbar {
+  padding: 16px var(--px-page-padding);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  backdrop-filter: blur(16px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.053);
+  z-index: 1000;
+}
+
+#navbar > .flex {
+  flex: 1;
+}

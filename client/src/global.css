@@ -1,0 +1,103 @@
+/* FUNDDAPP Theme */
+
+:root {
+  --bg-0: #08080A;
+  --bg-1: #0D0C12;
+  --bg-2: #16151C;
+  --accent: #a261f3;
+  --accent-gradient: linear-gradient(90deg, #5700FF 0%, #9000FF 100%);
+  --text-0: #FFFFFF;
+  --text-1: #6C6B70;
+  --border-0-transparent: #26262c76;
+  --border-0: #26262C;
+  --border-1: #0D0C12;
+  --border-2: #16151C;
+  --border-3: #1E1D23;
+
+  --px-border: 16px;
+
+  /* TODO: make value responsive */
+  --px-page-padding: 300px;
+}
+
+/* Fonts */
+
+@font-face {
+  font-family: "rec";   /*Can be any text*/
+  src:
+    local("Recursive_VF_1.084"),
+    url("./assets/fonts/Recursive_VF_1.084.woff2") format("woff");
+}
+
+/* Normalize CSS across all browsers */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color-scheme: dark;
+}
+
+html {
+  font-family: rec;
+  color: var(--text-0);
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 800, 'slnt' 0, 'CRSV' 1;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+a {
+  background-color: transparent;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+img {
+  border-style: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  background-color: unset;
+  border: none;
+  outline: none;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+[hidden] {
+  display: none;
+}

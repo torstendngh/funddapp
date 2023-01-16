@@ -1,0 +1,24 @@
+#accent-button {
+  height: 44px;
+  background: var(--accent-gradient);
+  color: var(--text-0);
+  border-radius: var(--px-border);
+  min-width: 128px;
+  border: 2px solid #ffffff3b;
+  background-origin: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0 16px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 1;
+  position: relative;
+  transition: all 0.1s ease;
+  min-height: 44px;
+}
+
+#accent-button:hover {
+  border: 2px solid white;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}

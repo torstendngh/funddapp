@@ -1,0 +1,85 @@
+.card {
+  border-radius: 16px;
+  background-color: #16151cc5;
+  border: 2px solid #26262C;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-radius: 16px;
+  background-color: #1b1a23;
+  border: 2px solid #5f5f64;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.card > .image-container {
+  aspect-ratio: 1/1;
+  border: 2px solid #1E1D23;
+  border-radius: 8px;
+  background-color: #0D0C12;
+}
+
+.card > .title {
+  margin-top: 8px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
+  transition: font-variation-settings 0.2s ease;
+}
+
+.card:hover > .title {
+  font-variation-settings: 'MONO' 0, 'CASL' 0.5, 'wght' 600, 'slnt' -15, 'CRSV' 0;
+}
+
+.card > .owner {
+  margin-top: 4px;
+  color: #6B6B6F;
+  font-size: 12px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+}
+
+.card > .detail-container {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card > .detail-container > .percentage {
+  color: var(--accent);
+  font-size: 16px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+}
+
+.card > .detail-container > .time {
+  color: var(--text-1);
+  font-size: 16px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+}
+
+.card > .progress-container {
+  margin-top: 4px;
+  background-color: #0D0C12;
+  border: 2px solid #1E1D23;
+  height: 16px;
+  border-radius: 1000px;
+  padding: 2px;
+}
+
+.card > .progress-container > .progress {
+  background: var(--accent-gradient);
+  border: 2px solid #ffffff38;
+  width: 30%;
+  height: 100%;
+  border-radius: 1000px;
+}
