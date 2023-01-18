@@ -10,6 +10,7 @@ const Footer = () => {
         <a href='/'>Home</a>
         <a href='/get-started'>Get Started</a>
         <a href='/create-project'>Create Project</a>
+        <a href='/search'>Search</a>
         <a href='/profile'>Profile</a>
         <a href='/'>About</a>
       </div>

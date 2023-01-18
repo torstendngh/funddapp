@@ -2,6 +2,7 @@ import React, { useContext, createContext } from 'react';
 
 import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite, useChainId } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
+import unidecode from 'unidecode'
 
 const StateContext = createContext();
 
@@ -32,14 +33,14 @@ export const StateContextProvider = ({ children }) => {
   const getProjects = async () => {
     const projects = await contract.call('getCampaigns');
 
-    const parsedProjects = projects.map((campaign, i) => ({
-      owner: campaign.owner,
-      title: campaign.title,
-      description: campaign.description,
-      target: ethers.utils.formatEther(campaign.target.toString()),
-      deadline: campaign.deadline.toNumber(),
-      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
-      image: campaign.image,
+    const parsedProjects = projects.map((project, i) => ({
+      owner: project.owner,
+      title: project.title,
+      description: project.description,
+      target: ethers.utils.formatEther(project.target.toString()),
+      deadline: project.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(project.amountCollected.toString()),
+      image: project.image,
       pId: i
     }));
 
@@ -55,11 +56,22 @@ export const StateContextProvider = ({ children }) => {
   }
 
   const getSearchProjects = async (search) => {
+    if (!search || search == null) search = ""
     const allProjects = await getProjects();
 
     const filteredProjects = allProjects.filter((project) => 
-      project.title.toUpperCase().replace(/\s/g, "")
-      .includes(search.toUpperCase().replace(/\s/g, "")))
+      unidecode(
+        project.title
+        .toUpperCase()
+        .replace(/\s/g, ""))
+      .includes(
+        unidecode(
+          search
+          .toUpperCase()
+          .replace(/\s/g, "")
+        )
+      )
+    )
 
     return filteredProjects;
   }
