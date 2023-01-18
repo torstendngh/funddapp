@@ -7,6 +7,15 @@ import './ProjectDetails.css'
 import Loader from '../components/global/Loader';
 import AccentButton from '../components/global/AccentButton';
 
+const DonatorRow = ({user, amount}) => {
+  return (
+    <div className='donator-row'>
+      <p className='user'>{user}</p>
+      <p className='amount'>{amount} ETH</p>
+    </div>
+  )
+}
+
 const ProjectDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -69,12 +78,17 @@ const ProjectDetails = () => {
           <p className='value'>{remainingDays}</p>
         </div>
       </div>
+
+      <div className='progress-container'>
+        <div className='progress' style={{ width: `${percentage}%`, maxWidth: '100%'}}></div>
+      </div>
+
       <div className='section-2'>
-        <div className='progress-container'>
-          <div className='progress' style={{ width: `${percentage}%`, maxWidth: '100%'}}></div>
-        </div>
-        
+        <p>ETH:</p>
+        <input value={amount} step="0.001" placeholder='0.001' type="number" onChange={(e) => setAmount(e.target.value)} />
         <AccentButton
+          buttonType="button"
+          handleClick={handleDonate}
           height="64px"
           width="400px"
         >
@@ -83,6 +97,14 @@ const ProjectDetails = () => {
         </AccentButton>
       </div>
       
+      <div className='section-3'>
+        <p>{donators.length} Donators</p>
+        {
+          donators.length > 0 && donators.map((donator, i) => (
+            <DonatorRow user={donator.donator} amount={donator.donation}/>
+          ))
+        }
+      </div>
     </div>
   )
 }

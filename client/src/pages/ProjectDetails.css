@@ -1,7 +1,6 @@
 .project-details {
   padding: 0 var(--px-page-padding);
   padding-top: 100px;
-  gap: 32px;
   display: flex;
   flex-direction: column;
 }
@@ -9,6 +8,7 @@
 .project-details > .section-0 {
   display: flex;
   gap: 32px;
+  margin-bottom: 32px;
 }
 
 .project-details > .section-0 > .image-container {
@@ -58,6 +58,7 @@
   border: 2px solid #1E1D23;
   border-radius: 16px;
   background-color: #0D0C12;
+  margin-bottom: 16px;
 }
 
 .project-details > .section-1 > div {
@@ -82,24 +83,82 @@
 }
 
 .project-details > .section-2 {
-  display: flex;
-  align-items: stretch;
   gap: 16px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32px;
 }
 
-.project-details > .section-2 > .progress-container {
+.project-details > .progress-container {
   background-color: #0D0C12;
   border: 2px solid #1E1D23;
   border-radius: 16px;
   padding: 2px;
-  flex: 1;
+  height: 32px;
+  margin-bottom: 32px;
 }
 
-.project-details > .section-2 > .progress-container > .progress {
+.project-details > .progress-container > .progress {
   background: var(--accent-gradient);
   border: 2px solid #ffffff38;
   max-width: 100%;
   height: 100%;
   border-radius: 12px;
-  min-width: 24px;
+  min-width: 32px;
+}
+
+.project-details > .section-2 > input {
+  border-radius: var(--px-border);
+  border: 2px solid #1E1D23;
+
+  background-color: #0d0c1288;
+  display: flex;
+
+  color: var(--text-0);
+  transition: all 0.1s ease;
+  font-size: 24px;
+  padding: 0 16px;
+  min-width: 100px;
+  max-width: 200px;
+  
+}
+
+.project-details > .section-2 > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  color: white;
+  font-size: 24px;
+}
+
+.project-details > .section-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-details > .section-3 > p {
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  color: white;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.donator-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.donator-row > .user {
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  color: #6B6B6F;
+  font-size: 24px;
+}
+
+.donator-row > .amount {
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
+  color: #6B6B6F;
+  font-size: 24px;
 }
