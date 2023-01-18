@@ -10,6 +10,7 @@ import CreateProject from './pages/CreateProject';
 import ProjectDetails from './pages/ProjectDetails';
 import GetStarted from './pages/GetStarted';
 import Profile from './pages/Profile';
+import Search from './pages/Search';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='/project-details/:id' element={<ProjectDetails/>}/>
             <Route path='/get-started' element={<GetStarted/>}/>
             <Route path='/profile' element={<Profile/>}/>
+            <Route path='/search' element={<Search/>}/>
           </Routes>
         </div>
         

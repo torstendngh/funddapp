@@ -9,24 +9,24 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(false);
+  const [projects, setProjects] = useState([]);
 
-  const { address, contract, getCampaigns } = useStateContext();
+  const { address, contract, getProjects } = useStateContext();
 
-  const fetchCampaigns = async () => {
-    setIsLoading(true);
-    const data = await getCampaigns();
-    setCampaigns(data);
-    setIsLoading(false);
+  const fetchProjects = async () => {
+    setIsLoadingProjects(true);
+    const data = await getProjects();
+    setProjects(data);
+    setIsLoadingProjects(false);
   }
 
-  const handleNavigate = (campaign) => {
-    navigate(`/project-details/${campaign.title}`, { state: campaign })
+  const handleNavigate = (project) => {
+    navigate(`/project-details/${project.title}`, { state: project })
   }
 
   useEffect(() => {
-    if(contract) fetchCampaigns();
+    if(contract) fetchProjects();
   }, [address, contract]);
 
   return (
@@ -83,20 +83,20 @@ const Home = () => {
 
       <div className='card-grid'>
         {
-          isLoading &&
+          isLoadingProjects &&
           <Loader/>
         }
 
         {
-          campaigns.map((campaign) => <Card
-            key={campaign.id}
-            owner={campaign.owner}
-            title={campaign.title}
-            image={campaign.image}
-            deadline={campaign.deadline}
-            target={campaign.target}
-            amountCollected={campaign.amountCollected}
-            handleClick={() => handleNavigate(campaign)}
+          projects.map((project) => <Card
+            key={project.id}
+            owner={project.owner}
+            title={project.title}
+            image={project.image}
+            deadline={project.deadline}
+            target={project.target}
+            amountCollected={project.amountCollected}
+            handleClick={() => handleNavigate(project)}
           />)
         }
       </div>

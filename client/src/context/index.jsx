@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 
-import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite } from '@thirdweb-dev/react';
+import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite, useChainId } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 
 const StateContext = createContext();
@@ -12,8 +12,9 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress();
   const connect = useMetamask();
   const disconnect = useDisconnect();
+  const chainId = useChainId();
 
-  const publishCampaign = async (form) => {
+  const publishProject = async (form) => {
     try {
       const data = await createCampaign([
         address, // owner
@@ -28,10 +29,10 @@ export const StateContextProvider = ({ children }) => {
     }
   }
 
-  const getCampaigns = async () => {
-    const campaigns = await contract.call('getCampaigns');
+  const getProjects = async () => {
+    const projects = await contract.call('getCampaigns');
 
-    const parsedCampaings = campaigns.map((campaign, i) => ({
+    const parsedProjects = projects.map((campaign, i) => ({
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
@@ -42,15 +43,25 @@ export const StateContextProvider = ({ children }) => {
       pId: i
     }));
 
-    return parsedCampaings;
+    return parsedProjects;
   }
 
-  const getUserCampaigns = async () => {
-    const allCampaigns = await getCampaigns();
+  const getUserProjects = async () => {
+    const allProjects = await getProjects();
 
-    const filteredCampaigns = allCampaigns.filter((campaign) => campaign.owner === address);
+    const filteredProjects = allProjects.filter((project) => project.owner === address);
 
-    return filteredCampaigns;
+    return filteredProjects;
+  }
+
+  const getSearchProjects = async (search) => {
+    const allProjects = await getProjects();
+
+    const filteredProjects = allProjects.filter((project) => 
+      project.title.toUpperCase().replace(/\s/g, "")
+      .includes(search.toUpperCase().replace(/\s/g, "")))
+
+    return filteredProjects;
   }
 
   const donate = async (pId, amount) => {
@@ -83,9 +94,11 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         disconnect,
-        createCampaign: publishCampaign,
-        getCampaigns,
-        getUserCampaigns,
+        chainId,
+        publishProject,
+        getSearchProjects,
+        getProjects,
+        getUserProjects,
         donate,
         getDonations
       }}

@@ -14,12 +14,14 @@
   margin-top: 16px;
   width: 100%;
   border-radius: 16px;
-  background-color: #16151C;
-  border: 2px solid #26262C;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   max-width: 1000px;
+
+  background-color: #16151cc5;
+  border: 2px solid #26262C;
+  backdrop-filter: blur(16px);
 }
 
 .create-project > .creator-container > .titlebar {

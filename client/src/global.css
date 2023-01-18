@@ -31,6 +31,16 @@
   }
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: var(--accent);
+}
+
+::selection {
+  color: white;
+  background: var(--accent);
+}
+
 /* Fonts */
 
 @font-face {

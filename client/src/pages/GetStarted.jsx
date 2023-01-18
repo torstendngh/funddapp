@@ -69,21 +69,21 @@ const GetStarted = () => {
         </div>
       </div>
       <div className='section'>
-        <p className='number'>3</p>
+        <p className='number'>4</p>
         <div className='content'>
           <p className='title'>Press "Next"</p>
           <img className='image' src={tut1} alt="" />
         </div>
       </div>
       <div className='section'>
-        <p className='number'>4</p>
+        <p className='number'>5</p>
         <div className='content'>
           <p className='title'>Press "Connect"</p>
           <img className='image' src={tut2} alt="" />
         </div>
       </div>
       <div className='section'>
-        <p className='number'>5</p>
+        <p className='number'>6</p>
         <div className='content'>
           <p className='title'>Finished</p>
         </div>

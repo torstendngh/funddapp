@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ethers } from "ethers";
 import AccentButton from '../components/global/AccentButton';
@@ -43,8 +43,8 @@ const TextField = ({ label, placeholder, inputType, isTextArea, value, handleCha
 const CreateProject = () => {
 
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const { createCampaign } = useStateContext();
+  const [isLoadingCreation, setIsLoadingCreation] = useState(false);
+  const { publishProject } = useStateContext();
   const [form, setForm] = useState({
     name: '',
     title: '',
@@ -63,9 +63,9 @@ const CreateProject = () => {
 
     checkIfImage(form.image, async (exists) => {
       if(exists) {
-        setIsLoading(true)
-        await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target, 18)})
-        setIsLoading(false);
+        setIsLoadingCreation(true)
+        await publishProject({ ...form, target: ethers.utils.parseUnits(form.target, 18)})
+        setIsLoadingCreation(false);
         navigate('/');
       } else {
         setForm({ ...form, image: '' });
@@ -81,7 +81,7 @@ const CreateProject = () => {
           <p>Create New Project</p>
         </div>
 
-        { isLoading ?
+        { isLoadingCreation ?
           <Loader text={"Uploading Project to Blockchain.."}/>
           :
           <form onSubmit={handleSubmit} className='content'>

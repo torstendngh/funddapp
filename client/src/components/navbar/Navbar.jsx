@@ -17,7 +17,9 @@ const Navbar = () => {
     <div className='navbar'>
       <Logo/>
       <div className='flex'></div>
-      <Searchbar/>
+      <Searchbar
+
+      />
       <AccentButton
         buttonType="button"
         handleClick={() => {
@@ -42,7 +44,7 @@ const Navbar = () => {
       {
         address &&
         <ProfileIcon
-        handleClick={() => navigate('profile')}
+          handleClick={() => navigate('profile')}
         />
       }
       

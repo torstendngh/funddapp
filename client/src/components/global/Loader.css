@@ -18,8 +18,20 @@
   width: 128px;
   height: 128px;
   position: relative;
+  perspective: 200px;	
 }
 
 .loader > div > .loader-1 {
   position: absolute;
+  transform: rotateY(0deg);
+  animation: rotateAnimation 2s ease infinite;
+}
+
+@keyframes rotateAnimation {
+	from {
+    transform: rotateY(0);
+  }
+	to {
+    transform: rotateY(360deg);
+  }
 }
