@@ -4,8 +4,10 @@ import Card from '../components/global/Card';
 import './Home.css'
 import { useStateContext } from '../context'
 import Loader from '../components/global/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
@@ -17,6 +19,10 @@ const Home = () => {
     const data = await getCampaigns();
     setCampaigns(data);
     setIsLoading(false);
+  }
+
+  const handleNavigate = (campaign) => {
+    navigate(`/project-details/${campaign.title}`, { state: campaign })
   }
 
   useEffect(() => {
@@ -85,7 +91,8 @@ const Home = () => {
             image={campaign.image}
             deadline={campaign.deadline}
             target={campaign.target}
-            amountCollected={campaign.target}
+            amountCollected={campaign.amountCollected}
+            handleClick={() => handleNavigate(campaign)}
           />)
         }
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Card.css';
 import { daysLeft, calculateBarPercentage } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
 function truncateString(str, num) {
   if (str.length > num) {
@@ -18,7 +19,7 @@ const Card = ({ title, owner, target, amountCollected, deadline, image, handleCl
   const truncatedOwnerString = truncateString(`${owner}`, 10)
 
   return (
-    <div className='card'>
+    <div className='card' onClick={handleClick}>
       <div className='image-container'>
         {image && <img src={image} alt="" />}
         
@@ -30,7 +31,7 @@ const Card = ({ title, owner, target, amountCollected, deadline, image, handleCl
         <p className='time'>{remainingDays} days left</p>
       </div>
       <div className='progress-container'>
-        <div className='progress' style={{ width: `${percentage}%`}}></div>
+        <div className='progress' style={{ width: `${percentage}%`, maxWidth: '100%'}}></div>
       </div>
     </div>
   );
