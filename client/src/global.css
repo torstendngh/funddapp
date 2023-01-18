@@ -1,4 +1,4 @@
-/* FUNDDAPP Theme */
+/* ChainFunding Theme */
 
 :root {
   --bg-0: #08080A;
@@ -18,6 +18,20 @@
 
   /* TODO: make value responsive */
   --px-page-padding: 300px;
+}
+
+@media (max-width: 2000px) {
+  
+  :root {
+    --px-page-padding: 100px;
+  }
+}
+
+@media (max-width: 800px) {
+  
+  :root {
+    --px-page-padding: 32px;
+  }
 }
 
 /* Fonts */

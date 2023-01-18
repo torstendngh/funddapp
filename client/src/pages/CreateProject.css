@@ -1,5 +1,6 @@
 .create-project {
   padding: 0 var(--px-page-padding);
+  color: white;
   padding-top: 100px;
   display: flex;
   flex-direction: column;

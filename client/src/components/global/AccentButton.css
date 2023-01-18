@@ -15,7 +15,6 @@
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 1;
   position: relative;
   transition: all 0.1s ease;
-  min-height: 44px;
 }
 
 #accent-button:hover {

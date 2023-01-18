@@ -1,6 +1,6 @@
 #searchbox {
   border-radius: var(--px-border);
-  border: 2px solid var(--border-3);
+  border: 2px solid #2b283a88;
   background-color: #0d0c1288;
   display: flex;
   align-items: center;

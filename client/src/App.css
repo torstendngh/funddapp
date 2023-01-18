@@ -3,8 +3,39 @@
   width: 100vw;
   background-color: var(--bg-0);
   overflow: auto;
+    background-image:
+    radial-gradient(at 0% 20%, #150026 0, transparent 50%),
+    radial-gradient(at 50% 50%, #29006718 0, transparent 80%),
+    radial-gradient(at 100% 30%, #35005e2c 0, transparent 50%);
+  overflow: overlay
 }
 
 #app > .page-container {
   min-height: 100%;
+
+}
+
+/* width */
+#app::-webkit-scrollbar {
+  width: 16px;
+
+}
+
+/* Track */
+#app::-webkit-scrollbar-track {
+  background: #16151C;
+  margin-top: 84px;
+  margin-bottom: 8px;
+  border-radius: 1000px;
+}
+
+/* Handle */
+#app::-webkit-scrollbar-thumb {
+  background: #26262C;
+  border-radius: 1000px;
+}
+
+/* Handle on hover */
+#app::-webkit-scrollbar-thumb:hover {
+  background: #6C6B70;
 }

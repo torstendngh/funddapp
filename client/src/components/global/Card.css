@@ -8,6 +8,7 @@
   min-width: 200px;
   cursor: pointer;
   transition: all 0.2s ease;
+  backdrop-filter: blur(16px);
 }
 
 .card:hover {
@@ -27,18 +28,21 @@
   border: 2px solid #1E1D23;
   border-radius: 8px;
   background-color: #0D0C12;
+  overflow: hidden;
+}
+
+.card > .image-container > img {
+  width: 100%; /* or any custom size */
+  height: 100%; 
+  object-fit: cover;
 }
 
 .card > .title {
   margin-top: 8px;
   color: #FFFFFF;
   font-size: 16px;
-  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 500, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.2s ease;
-}
-
-.card:hover > .title {
-  font-variation-settings: 'MONO' 0, 'CASL' 0.5, 'wght' 600, 'slnt' -15, 'CRSV' 0;
 }
 
 .card > .owner {
@@ -58,7 +62,13 @@
 .card > .detail-container > .percentage {
   color: var(--accent);
   font-size: 16px;
-  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+}
+
+.card > .detail-container > .percentage > span {
+  color: #7245a9;
+  font-size: 16px;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
 }
 
 .card > .detail-container > .time {
