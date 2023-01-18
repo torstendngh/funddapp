@@ -50,6 +50,13 @@ const ProjectDetails = () => {
 
   return (
     <div className='project-details'>
+      {
+        isLoading &&
+        <div className='loading-screen'>
+          <Loader text={`Donating ${amount || "0.001"} ETH to project "${state.title}"`}/>
+        </div>
+      }
+      
       <div className='section-0'>
         <div className='image-container'>
           <img src={state.image} alt="" />
