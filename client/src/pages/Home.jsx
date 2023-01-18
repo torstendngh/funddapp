@@ -30,7 +30,7 @@ const Home = () => {
   }, [address, contract]);
 
   return (
-    <div id='home'>
+    <div className='home'>
 
       <svg className='thing' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.06 122.88">
         <defs>  

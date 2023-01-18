@@ -1,8 +1,10 @@
 .project-details {
   padding: 0 var(--px-page-padding);
-  padding-top: 100px;
+  padding-top: calc(var(--px-top-padding) + 32px);
   display: flex;
   flex-direction: column;
+  padding-bottom: 128px;
+  flex: 1;
 }
 
 .project-details > .section-0 {
@@ -181,7 +183,7 @@
 .project-details > .section-3 {
   display: flex;
   flex-direction: column;
-    z-index: 1;
+  z-index: 1;
 }
 
 .project-details > .section-3 > p {

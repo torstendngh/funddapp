@@ -1,11 +1,13 @@
 .create-project {
   padding: 0 var(--px-page-padding);
   color: white;
-  padding-top: 100px;
+  padding-top: calc(var(--px-top-padding) + 32px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 128px;
+  flex: 1;
 }
 
 .create-project > .creator-container {

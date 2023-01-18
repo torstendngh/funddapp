@@ -15,20 +15,17 @@
   --border-3: #1E1D23;
 
   --px-border: 16px;
-
-  /* TODO: make value responsive */
   --px-page-padding: 300px;
+  --px-top-padding: 78px;
 }
 
 @media (max-width: 2000px) {
-  
   :root {
     --px-page-padding: 100px;
   }
 }
 
 @media (max-width: 800px) {
-  
   :root {
     --px-page-padding: 32px;
   }
@@ -107,11 +104,6 @@ select {
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
-}
-
-[type="search"] {
-  -webkit-appearance: textfield;
-  outline-offset: -2px;
 }
 
 [type="search"]::-webkit-search-decoration {

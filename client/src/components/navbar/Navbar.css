@@ -1,4 +1,4 @@
-#navbar {
+.navbar {
   padding: 16px var(--px-page-padding);
   display: flex;
   align-items: center;
@@ -12,6 +12,6 @@
   z-index: 1000;
 }
 
-#navbar > .flex {
+.navbar > .flex {
   flex: 1;
 }

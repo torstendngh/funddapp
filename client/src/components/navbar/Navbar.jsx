@@ -1,26 +1,20 @@
-import React, { Fragment, useState } from 'react';
-import ProfileIcon from '../navbar/ProfileIcon';
-import AccentButton from './AccentButton';
-import Logo from './Logo';
+import React, { Fragment, useState, useEffect } from 'react';
+import ProfileIcon from './ProfileIcon';
+import AccentButton from '../global/AccentButton';
+import Logo from '../global/Logo';
 import './Navbar.css';
 import Searchbar from './Searchbox';
 import { useStateContext } from "../../context";
-import { Link, useNavigate } from 'react-router-dom';
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { useNavigate } from 'react-router-dom';
 import metamaskIcon from "../../assets/img/metamask-icon.png"
-
-const getWalletBalance = async (address) => {
-  return await ThirdwebSDK.getBalance(address)
-}
 
 const Navbar = () => {
 
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState('dashboard');
   const { connect, address } = useStateContext();
 
   return (
-    <div id='navbar'>
+    <div className='navbar'>
       <Logo/>
       <div className='flex'></div>
       <Searchbar/>
@@ -45,7 +39,13 @@ const Navbar = () => {
           </Fragment>
         }
       </AccentButton>
-      <ProfileIcon/>
+      {
+        address &&
+        <ProfileIcon
+        handleClick={() => navigate('profile')}
+        />
+      }
+      
     </div>
   );
 };

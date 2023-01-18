@@ -1,36 +1,33 @@
-#app {
+.app {
   height: 100vh;
   width: 100vw;
-
   overflow: overlay
 }
 
-#app > .page-container {
-  min-height: 100%;
-
+.app > .page-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-/* width */
-#app::-webkit-scrollbar {
+/* Scrollbar */
+
+.app::-webkit-scrollbar {
   width: 16px;
-
 }
 
-/* Track */
-#app::-webkit-scrollbar-track {
+.app::-webkit-scrollbar-track {
   background: #16151C;
   margin-top: 84px;
   margin-bottom: 8px;
   border-radius: 1000px;
 }
 
-/* Handle */
-#app::-webkit-scrollbar-thumb {
+.app::-webkit-scrollbar-thumb {
   background: #26262C;
   border-radius: 1000px;
 }
 
-/* Handle on hover */
-#app::-webkit-scrollbar-thumb:hover {
+.app::-webkit-scrollbar-thumb:hover {
   background: #6C6B70;
 }

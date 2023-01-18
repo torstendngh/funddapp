@@ -1,10 +1,12 @@
 .get-started {
   padding: 0 var(--px-page-padding);
-  padding-top: 128px;
+  padding-top: calc(var(--px-top-padding) + 64px);
   display: flex;
   flex-direction: column;
   gap: 42px;
   position:relative;
+  padding-bottom: 128px;
+  flex: 1;
 }
 
 .get-started > .thing {

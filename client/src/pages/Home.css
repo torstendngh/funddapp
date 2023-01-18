@@ -1,16 +1,19 @@
-#home {
+.home {
   width: 100%;
 
   padding: 0 var(--px-page-padding);
-  padding-top: 77px;
+  padding-top: calc(var(--px-top-padding) + 32px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   position:relative;
   z-index: 0;
+  overflow: hidden;
+  padding-bottom: 128px;
+  flex: 1;
 }
 
-#home > .thing {
+.home > .thing {
   position: absolute;
   width: 50%;
   right: var(--px-page-padding);
@@ -18,18 +21,18 @@
   top: -100px;
 }
 
-#home > .big-title {
+.home > .big-title {
   margin-top: 128px;
   font-size: 64px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.2s ease;
 }
 
-#home > .big-title:hover {
+.home > .big-title:hover {
   font-variation-settings: 'MONO' 1, 'CASL' 0.5, 'wght' 600, 'slnt' -15, 'CRSV' 0;
 }
 
-#home > .feature-list {
+.home > .feature-list {
   margin-top: 32px;
   margin-bottom: 40px;
   display: flex;
@@ -41,7 +44,7 @@
   border: 2px solid rgba(255, 255, 255, 0.08);
 }
 
-#home > .feature-list > .item {
+.home > .feature-list > .item {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -50,13 +53,13 @@
   text-shadow: black 0 0 8px;
 }
 
-#home > .feature-list > .devider {
+.home > .feature-list > .devider {
   width: 1px;
   height: 16px;
   background-color: var(--text-1);
 }
 
-#home > .card-grid {
+.home > .card-grid {
   margin-top: 128px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

@@ -1,4 +1,4 @@
-#logo {
+.logo {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -6,32 +6,32 @@
   color: var(--text-0);
 }
 
-#logo > svg {
+.logo > svg {
   transition: transform 0.15s ease;
 }
 
-#logo > .text {
+.logo > .text {
   font-size: 20px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 700, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.15s ease;
 }
 
-#logo > .text > span {
+.logo > .text > span {
   font-size: 20px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 300, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.15s ease;
 }
 
-#logo:hover > .text {
+.logo:hover > .text {
   font-size: 20px;
   font-variation-settings: 'MONO' 1, 'CASL' 1, 'wght' 700, 'slnt' -15, 'CRSV' 0;
 }
 
-#logo:hover > .text > span {
+.logo:hover > .text > span {
   font-size: 20px;
   font-variation-settings: 'MONO' 1, 'CASL' 1, 'wght' 300, 'slnt' -15, 'CRSV' 0;
 }
 
-#logo:hover > svg {
+.logo:hover > svg {
   transform: scale(1.1);
 }
