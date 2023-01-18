@@ -35,6 +35,10 @@
   display: flex;
   align-items: center;
   gap: 32px;
+  border-radius: 16px;
+  padding: 16px 32px;
+  backdrop-filter: blur(32px);
+  border: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 #home > .feature-list > .item {

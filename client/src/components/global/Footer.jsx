@@ -7,10 +7,10 @@ const Footer = () => {
     <div className='footer'>
       <Logo/>
       <div className='links'>
-        <a>Home</a>
-        <a>Get Started</a>
-        <a>Create Project</a>
-        <a>About</a>
+        <a href='/'>Home</a>
+        <a href='/get-started'>Get Started</a>
+        <a href='/create-project'>Create Project</a>
+        <a href='/'>About</a>
       </div>
     </div>
   )

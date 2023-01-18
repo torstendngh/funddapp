@@ -24,6 +24,7 @@
   font-size: 16px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.15s ease;
+  text-decoration: none;
 }
 
 .footer > .links > a:hover {

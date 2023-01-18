@@ -9,22 +9,34 @@
   display: flex;
   gap: 32px;
   margin-bottom: 32px;
+  z-index: 1;
+}
+
+.project-details > .section-0 > .image-container > .blur-image {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  filter: blur(128px) brightness(1.2);
+  opacity: 0.25;
 }
 
 .project-details > .section-0 > .image-container {
   display: flex;
   aspect-ratio: 1/1;
   width: 25%;
-  overflow: hidden;
-  border: 2px solid #1E1D23;
   border-radius: 16px;
   background-color: #0D0C12;
+  position: relative;
 }
 
-.project-details > .section-0 > .image-container > img {
+.project-details > .section-0 > .image-container > .image {
   width: 100%; /* or any custom size */
   height: 100%; 
   object-fit: cover;
+  border-radius: 16px;
+  
 }
 
 .project-details > .section-0 > .info-container {
@@ -52,13 +64,45 @@
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
 }
 
+.project-details > .section-0 > .info-container > .button-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-details > .section-0 > .info-container > .button-row > button {
+  border-radius: 16px;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #16151C;
+  color: #b9b9bd;
+  border: 2px solid #1E1D23;
+}
+
+.project-details > .section-0 > .info-container > .button-row > button:hover {
+  border-radius: 16px;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2d2b36;
+  color: white;
+  border: 2px solid #3d3c45;
+  cursor: pointer;
+}
+
 .project-details > .section-1 {
   display: flex;
   justify-content: space-between;
   border: 2px solid #1E1D23;
-  border-radius: 16px;
-  background-color: #0D0C12;
-  margin-bottom: 16px;
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  background-color: #16151C;
+  z-index: 1;
 }
 
 .project-details > .section-1 > div {
@@ -87,15 +131,17 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 32px;
+  z-index: 1;
 }
 
 .project-details > .progress-container {
   background-color: #0D0C12;
   border: 2px solid #1E1D23;
-  border-radius: 16px;
+  border-radius: 0 0 16px 16px;
   padding: 2px;
   height: 32px;
   margin-bottom: 32px;
+  z-index: 1;
 }
 
 .project-details > .progress-container > .progress {
@@ -135,6 +181,7 @@
 .project-details > .section-3 {
   display: flex;
   flex-direction: column;
+    z-index: 1;
 }
 
 .project-details > .section-3 > p {
@@ -148,23 +195,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  color: #6B6B6F;
+  padding: 4px 8px;
 }
 
 .donator-row:hover {
   background-color: rgba(255, 255, 255, 0.073);
-
+  border-radius: 8px;
+  color: #ffffff;
 }
 
 .donator-row > .user {
   font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
-  color: #6B6B6F;
   font-size: 24px;
 }
 
 .donator-row > .amount {
   font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
-  color: #6B6B6F;
   font-size: 24px;
 }
 

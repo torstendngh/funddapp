@@ -42,7 +42,7 @@ const Loader = ({ text }) => {
 
       </div>
 
-      {text || "Loading.."}
+      {text && text}
 
     </div>
   )

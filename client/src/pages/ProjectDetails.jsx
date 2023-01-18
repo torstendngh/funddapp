@@ -23,6 +23,7 @@ const ProjectDetails = () => {
   const { donate, getDonations, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDonators, setIsLoadingDonators] = useState(true);
   const [amount, setAmount] = useState('');
   const [donators, setDonators] = useState([]);
 
@@ -30,8 +31,9 @@ const ProjectDetails = () => {
   const percentage = calculateBarPercentage(state.target, state.amountCollected)
 
   const fetchDonators = async () => {
+    setIsLoadingDonators(true)
     const data = await getDonations(state.pId);
-
+    setIsLoadingDonators(false)
     setDonators(data);
   }
 
@@ -59,12 +61,25 @@ const ProjectDetails = () => {
       
       <div className='section-0'>
         <div className='image-container'>
-          <img src={state.image} alt="" />
+          <img className='image' src={state.image} alt="" />
+          <img className='blur-image' src={state.image} alt="" />
         </div>
+        
         <div className='info-container'>
           <p className='title'>{state.title}</p>
           <p className='username'>{state.owner}</p>
           <p className='description'>{state.description}</p>
+          <div className='button-row'>
+            <button>
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.82 5.58-.82.822-.824-.824a5.375 5.375 0 1 0-7.601 7.602l7.895 7.895a.75.75 0 0 0 1.06 0l7.902-7.897a5.376 5.376 0 0 0-.001-7.599 5.38 5.38 0 0 0-7.611 0Zm6.548 6.54L12 19.485 4.635 12.12a3.875 3.875 0 1 1 5.48-5.48l1.358 1.357a.75.75 0 0 0 1.073-.012L13.88 6.64a3.88 3.88 0 0 1 5.487 5.48Z" fill="currentColor"/></svg>
+            </button>
+            <button>
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 2.498a3.502 3.502 0 1 1-2.597 5.851l-4.558 2.604a3.5 3.5 0 0 1 0 2.093l4.557 2.606a3.502 3.502 0 1 1-.745 1.302L9.1 14.347a3.502 3.502 0 1 1 0-4.698l4.557-2.604A3.502 3.502 0 0 1 17 2.498Zm0 13.5a2.002 2.002 0 1 0 0 4.004 2.002 2.002 0 0 0 0-4.004Zm-10.498-6a2.002 2.002 0 1 0 0 4.004 2.002 2.002 0 0 0 0-4.004Zm10.498-6a2.002 2.002 0 1 0 0 4.004 2.002 2.002 0 0 0 0-4.004Z" fill="currentColor"/></svg>
+            </button>
+            <button>
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.91 2.782a2.25 2.25 0 0 1 2.975.74l.083.138 7.759 14.009a2.25 2.25 0 0 1-1.814 3.334l-.154.006H4.243a2.25 2.25 0 0 1-2.041-3.197l.072-.143L10.031 3.66a2.25 2.25 0 0 1 .878-.878Zm9.505 15.613-7.76-14.008a.75.75 0 0 0-1.254-.088l-.057.088-7.757 14.008a.75.75 0 0 0 .561 1.108l.095.006h15.516a.75.75 0 0 0 .696-1.028l-.04-.086-7.76-14.008 7.76 14.008ZM12 16.002a.999.999 0 1 1 0 1.997.999.999 0 0 1 0-1.997ZM11.995 8.5a.75.75 0 0 1 .744.647l.007.102.004 4.502a.75.75 0 0 1-1.494.103l-.006-.102-.004-4.502a.75.75 0 0 1 .75-.75Z" fill="currentColor"/></svg>
+            </button>
+          </div>
         </div>
       </div>
       <div className='section-1'>
@@ -107,10 +122,14 @@ const ProjectDetails = () => {
       <div className='section-3'>
         <p>{donators.length} Donators</p>
         {
+          isLoadingDonators && <Loader/>
+        }
+        {
           donators.length > 0 && donators.map((donator, i) => (
             <DonatorRow user={donator.donator} amount={donator.donation}/>
           ))
         }
+        
       </div>
     </div>
   )

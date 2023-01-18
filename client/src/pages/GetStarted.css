@@ -1,0 +1,87 @@
+.get-started {
+  padding: 0 var(--px-page-padding);
+  padding-top: 128px;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  position:relative;
+}
+
+.get-started > .thing {
+  position: absolute;
+  width: 50%;
+  right: var(--px-page-padding);
+  z-index: -1;
+  top: -100px;
+}
+
+.get-started > .title {
+  font-size: 42px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 200, 'slnt' 0, 'CRSV' 0;
+}
+
+.get-started > .section {
+  margin-top: 32px;
+  gap: 32px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.get-started > .section > .number {
+  height: 100px;
+  width: 100px;
+  border-radius: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 350, 'slnt' 0, 'CRSV' 0;
+  color: white;
+  position: relative;
+}
+
+.get-started > .section > .number::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1000px; 
+  padding: 4px; 
+  background: var(--accent-gradient); 
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude; 
+}
+
+.get-started > .section > .content > .title {
+  font-size: 32px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 800, 'slnt' 0, 'CRSV' 0;
+}
+
+.get-started > .section > .content > .text {
+  font-size: 24px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 200, 'slnt' 0, 'CRSV' 0;
+}
+
+.get-started > .section > .content {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.get-started > .section > .content > .image {
+  width: 500px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.107);
+}
+
+.get-started > .devider {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.107);
+  margin: 64px 0;
+}

@@ -1,12 +1,7 @@
 #app {
   height: 100vh;
   width: 100vw;
-  background-color: var(--bg-0);
-  overflow: auto;
-    background-image:
-    radial-gradient(at 0% 20%, #150026 0, transparent 50%),
-    radial-gradient(at 50% 50%, #29006718 0, transparent 80%),
-    radial-gradient(at 100% 30%, #35005e2c 0, transparent 50%);
+
   overflow: overlay
 }
 

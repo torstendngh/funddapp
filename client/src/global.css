@@ -56,6 +56,12 @@ html {
   font-family: rec;
   color: var(--text-0);
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 800, 'slnt' 0, 'CRSV' 1;
+  background-color: var(--bg-0);
+  overflow: auto;
+    background-image:
+    radial-gradient(at 0% 20%, #150026 0, transparent 50%),
+    radial-gradient(at 50% 50%, #29006718 0, transparent 80%),
+    radial-gradient(at 100% 30%, #35005e2c 0, transparent 50%);
 }
 
 body {
