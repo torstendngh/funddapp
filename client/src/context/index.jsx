@@ -15,6 +15,9 @@ export const StateContextProvider = ({ children }) => {
   const disconnect = useDisconnect();
   const chainId = useChainId();
 
+  // Minimum target amount in ETH
+  const MIN_TARGET_AMOUNT = 0.001;
+
   const publishProject = async (form) => {
     try {
       const data = await createCampaign([
@@ -124,6 +127,7 @@ export const StateContextProvider = ({ children }) => {
         getSearchProjects,
         getProjects,
         getUserProjects,
+        MIN_TARGET_AMOUNT,
         donate,
         getDonations
       }}

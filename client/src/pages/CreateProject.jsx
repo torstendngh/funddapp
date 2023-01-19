@@ -14,7 +14,7 @@ import AccentButton from '../components/global/AccentButton';
 // CSS
 import './CreateProject.css';
 
-const TextField = ({ label, placeholder, inputType, isTextArea, value, handleChange, icon, required }) => {
+const TextField = ({ label, placeholder, inputType, isTextArea, value, handleChange, icon, required, min }) => {
   return (
     <div className='text-field'>
       <p className='label'>{label}</p>
@@ -30,6 +30,7 @@ const TextField = ({ label, placeholder, inputType, isTextArea, value, handleCha
             value={value} 
             onChange={handleChange} 
             required={required || true}
+            min={min}
           />
         ) : (
           <input 
@@ -39,6 +40,7 @@ const TextField = ({ label, placeholder, inputType, isTextArea, value, handleCha
             value={value} 
             onChange={handleChange} 
             required={required || true}
+            min={min}
           />
         )}
         
@@ -51,7 +53,7 @@ const CreateProject = () => {
 
   const navigate = useNavigate();
   const [isLoadingCreation, setIsLoadingCreation] = useState(false);
-  const { publishProject } = useStateContext();
+  const { publishProject, MIN_TARGET_AMOUNT } = useStateContext();
   const [form, setForm] = useState({
     name: '',
     title: '',
@@ -69,7 +71,7 @@ const CreateProject = () => {
     e.preventDefault();
 
     checkIfImage(form.image, async (exists) => {
-      if(exists) {
+      if(exists && form.target >= MIN_TARGET_AMOUNT) {
         setIsLoadingCreation(true);
         await publishProject({ ...form, target: ethers.utils.parseUnits(form.target, 18)});
         setIsLoadingCreation(false);
@@ -131,8 +133,9 @@ const CreateProject = () => {
               <TextField
                 handleChange={(e) => handleFormFieldChange('target', e)}
                 inputType="number"
+                min={MIN_TARGET_AMOUNT}
                 label={"Goal (ETH)"}
-                placeholder={"0.000"}
+                placeholder={MIN_TARGET_AMOUNT}
                 icon={<svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3.747a.75.75 0 0 1 .75-.75h16.504a.75.75 0 0 1 .6 1.2L16.69 9.748l4.164 5.552a.75.75 0 0 1-.6 1.2H4.5v4.749a.75.75 0 0 1-.648.743L3.75 22a.75.75 0 0 1-.743-.648L3 21.249V3.747Zm15.754.75H4.5V15h14.254l-3.602-4.802a.75.75 0 0 1 0-.9l3.602-4.8Z" fill="currentColor"/></svg>}
               />
               <TextField

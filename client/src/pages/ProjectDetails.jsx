@@ -30,7 +30,7 @@ const ProjectDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { donate, getDonations, contract, address, MIN_TARGET_AMOUNT } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDonators, setIsLoadingDonators] = useState(true);
@@ -78,7 +78,7 @@ const ProjectDetails = () => {
         <div className='info-container'>
           <p className='title'>{state.title}</p>
           <div className='username'>
-            <div className='profile-picture' dangerouslySetInnerHTML={{__html: toSvg(state.owner, 24)}}></div>
+            <div className='profile-picture'  dangerouslySetInnerHTML={{__html: toSvg(state.owner, 24)}}></div>
             {state.owner}
           </div>
           <p className='description'>{state.description}</p>
@@ -120,7 +120,7 @@ const ProjectDetails = () => {
 
       <div className='section-2'>
         <p>ETH:</p>
-        <input value={amount} step="0.001" placeholder='0.001' type="number" onChange={(e) => setAmount(e.target.value)} />
+        <input min={MIN_TARGET_AMOUNT} value={amount} step="0.001" placeholder={MIN_TARGET_AMOUNT} type="number" onChange={(e) => setAmount(e.target.value)} />
         <AccentButton
           buttonType="button"
           handleClick={handleDonate}
