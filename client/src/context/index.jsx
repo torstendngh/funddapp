@@ -59,7 +59,7 @@ export const StateContextProvider = ({ children }) => {
     if (!search || search == null) search = ""
     const allProjects = await getProjects();
 
-    const filteredProjects = allProjects.filter((project) => 
+    const filteredByTitle = allProjects.filter((project) => 
       unidecode(
         project.title
         .toUpperCase()
@@ -73,7 +73,21 @@ export const StateContextProvider = ({ children }) => {
       )
     )
 
-    return filteredProjects;
+    const filteredByDescription = allProjects.filter((project) => 
+      unidecode(
+        project.description
+        .toUpperCase()
+        .replace(/\s/g, ""))
+      .includes(
+        unidecode(
+          search
+          .toUpperCase()
+          .replace(/\s/g, "")
+        )
+      )
+    )
+
+    return [filteredByTitle, filteredByDescription];
   }
 
   const donate = async (pId, amount) => {

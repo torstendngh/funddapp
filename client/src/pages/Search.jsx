@@ -11,14 +11,14 @@ const Search = () => {
   const navigate = useNavigate();
 
   const [isLoadingProjects, setIsLoadingProjects] = useState(false);
-  const [projects, setProjects] = useState([]);
+  const [results, setResults] = useState([ [], [] ]);
 
   const { getSearchProjects, contract } = useStateContext();
 
-  const fetchProjects = async (search) => {
+  const fetchResults = async (search) => {
     setIsLoadingProjects(true);
     const data = await getSearchProjects(search);
-    setProjects(data);
+    setResults(data);
     setIsLoadingProjects(false);
   }
 
@@ -27,19 +27,38 @@ const Search = () => {
   }
 
   useEffect(() => {
-    if(contract) fetchProjects(state);
+    if(contract) fetchResults(state);
   }, [contract, state]);
 
   return (
     <div className='search'>
-      <div className='title'>{projects.length} {projects.length == 1 ? "Result" : "Results"}</div>
+      <div className='title'>{results[0].length} {results[0].length == 1 ? "result" : "results"} found in title</div>
       <div className='card-grid'>
         {
           isLoadingProjects &&
           <Loader/>
         }
         {
-          projects.map((project) => <Card
+          results[0].map((project) => <Card
+            key={project.id}
+            owner={project.owner}
+            title={project.title}
+            image={project.image}
+            deadline={project.deadline}
+            target={project.target}
+            amountCollected={project.amountCollected}
+            handleClick={() => handleNavigate(project)}
+          />)
+        }
+      </div>
+      <div className='title'>{results[1].length} {results[1].length == 1 ? "result" : "results"} found in description</div>
+      <div className='card-grid'>
+        {
+          isLoadingProjects &&
+          <Loader/>
+        }
+        {
+          results[1].map((project) => <Card
             key={project.id}
             owner={project.owner}
             title={project.title}
