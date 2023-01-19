@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useStateContext } from '../context';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import './ProjectDetails.css'
+import { toSvg } from 'jdenticon'
 
 import Loader from '../components/global/Loader';
 import AccentButton from '../components/global/AccentButton';
@@ -10,7 +11,10 @@ import AccentButton from '../components/global/AccentButton';
 const DonatorRow = ({user, amount}) => {
   return (
     <div className='donator-row'>
-      <p className='user'>{user}</p>
+      <div className='user'>
+        <div className='profile-picture' dangerouslySetInnerHTML={{__html: toSvg(user, 24)}}></div>
+        {user}
+      </div>
       <p className='amount'>{amount} ETH</p>
     </div>
   )
@@ -67,7 +71,10 @@ const ProjectDetails = () => {
         
         <div className='info-container'>
           <p className='title'>{state.title}</p>
-          <p className='username'>{state.owner}</p>
+          <div className='username'>
+            <div className='profile-picture' dangerouslySetInnerHTML={{__html: toSvg(state.owner, 24)}}></div>
+            {state.owner}
+          </div>
           <p className='description'>{state.description}</p>
           <div className='button-row'>
             <button>

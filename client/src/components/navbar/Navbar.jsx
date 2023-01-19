@@ -45,6 +45,7 @@ const Navbar = () => {
         address &&
         <ProfileIcon
           handleClick={() => navigate('profile')}
+          address={address}
         />
       }
       

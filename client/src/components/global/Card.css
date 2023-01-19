@@ -50,6 +50,16 @@
   color: #6B6B6F;
   font-size: 12px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card > .owner > .profile-picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .card > .detail-container {
