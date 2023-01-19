@@ -1,11 +1,18 @@
-import React, { useState } from 'react'
+// Modules
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from "ethers";
-import AccentButton from '../components/global/AccentButton';
-import './CreateProject.css'
-import { useStateContext } from "../context";
 import { checkIfImage } from '../utils';
+
+// Context
+import { useStateContext } from "../context";
+
+// Components
 import Loader from '../components/global/Loader';
+import AccentButton from '../components/global/AccentButton';
+
+// CSS
+import './CreateProject.css';
 
 const TextField = ({ label, placeholder, inputType, isTextArea, value, handleChange, icon, required }) => {
   return (
@@ -37,8 +44,8 @@ const TextField = ({ label, placeholder, inputType, isTextArea, value, handleCha
         
       </div>
     </div>
-  )
-}
+  );
+};
 
 const CreateProject = () => {
 
@@ -55,23 +62,23 @@ const CreateProject = () => {
   });
 
   const handleFormFieldChange = (fieldName, e) => {
-    setForm({ ...form, [fieldName]: e.target.value })
-  }
+    setForm({ ...form, [fieldName]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     checkIfImage(form.image, async (exists) => {
       if(exists) {
-        setIsLoadingCreation(true)
-        await publishProject({ ...form, target: ethers.utils.parseUnits(form.target, 18)})
+        setIsLoadingCreation(true);
+        await publishProject({ ...form, target: ethers.utils.parseUnits(form.target, 18)});
         setIsLoadingCreation(false);
         navigate('/');
       } else {
         setForm({ ...form, image: '' });
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className='create-project'>
@@ -149,7 +156,7 @@ const CreateProject = () => {
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateProject
+export default CreateProject;

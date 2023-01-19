@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react'
+// Modules
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useStateContext } from '../context';
 import { calculateBarPercentage, daysLeft } from '../utils';
-import './ProjectDetails.css'
-import { toSvg } from 'jdenticon'
+import { toSvg } from 'jdenticon';
 
+// Context
+import { useStateContext } from '../context';
+
+// Components
 import Loader from '../components/global/Loader';
 import AccentButton from '../components/global/AccentButton';
+
+// CSS
+import './ProjectDetails.css';
 
 const DonatorRow = ({user, amount}) => {
   return (
@@ -17,8 +23,8 @@ const DonatorRow = ({user, amount}) => {
       </div>
       <p className='amount'>{amount} ETH</p>
     </div>
-  )
-}
+  );
+};
 
 const ProjectDetails = () => {
   const { state } = useLocation();
@@ -32,27 +38,27 @@ const ProjectDetails = () => {
   const [donators, setDonators] = useState([]);
 
   const remainingDays = daysLeft(state.deadline);
-  const percentage = calculateBarPercentage(state.target, state.amountCollected)
+  const percentage = calculateBarPercentage(state.target, state.amountCollected);
 
   const fetchDonators = async () => {
-    setIsLoadingDonators(true)
+    setIsLoadingDonators(true);
     const data = await getDonations(state.pId);
-    setIsLoadingDonators(false)
+    setIsLoadingDonators(false);
     setDonators(data);
-  }
+  };
 
   useEffect(() => {
     if(contract) fetchDonators();
-  }, [contract, address])
+  }, [contract, address]);
 
   const handleDonate = async () => {
     setIsLoading(true);
 
     await donate(state.pId, amount); 
 
-    navigate('/')
+    navigate('/');
     setIsLoading(false);
-  }
+  };
 
   return (
     <div className='project-details'>
@@ -139,7 +145,7 @@ const ProjectDetails = () => {
         
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProjectDetails
+export default ProjectDetails;

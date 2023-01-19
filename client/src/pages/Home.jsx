@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import AccentButton from '../components/global/AccentButton';
-import Card from '../components/global/Card';
-import './Home.css'
-import { useStateContext } from '../context'
-import Loader from '../components/global/Loader';
+// Modules
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Context
+import { useStateContext } from '../context';
+
+// Components
+import Card from '../components/global/Card';
+import Loader from '../components/global/Loader';
+import AccentButton from '../components/global/AccentButton';
+
+// CSS
+import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,11 +26,11 @@ const Home = () => {
     const data = await getProjects();
     setProjects(data);
     setIsLoadingProjects(false);
-  }
+  };
 
   const handleNavigate = (project) => {
-    navigate(`/project-details/${project.title}`, { state: project })
-  }
+    navigate(`/project-details/${project.title}`, { state: project });
+  };
 
   useEffect(() => {
     if(contract) fetchProjects();
@@ -100,13 +107,8 @@ const Home = () => {
           />)
         }
       </div>
-
-
-
-
-
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

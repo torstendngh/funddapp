@@ -1,8 +1,13 @@
-import React from 'react'
-import './GetStarted.css'
-import tut0 from '../assets/img/tut0.jpg'
-import tut1 from '../assets/img/tut1.jpg'
-import tut2 from '../assets/img/tut2.jpg'
+// Modules
+import React from 'react';
+
+// Images
+import tut0 from '../assets/img/tut0.jpg';
+import tut1 from '../assets/img/tut1.jpg';
+import tut2 from '../assets/img/tut2.jpg';
+
+// CSS
+import './GetStarted.css';
 
 const GetStarted = () => {
   return (
@@ -89,7 +94,7 @@ const GetStarted = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GetStarted
+export default GetStarted;

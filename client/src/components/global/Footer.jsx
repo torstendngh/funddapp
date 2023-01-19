@@ -1,6 +1,9 @@
-import React from 'react'
-import Logo from './Logo'
-import './Footer.css'
+// Modules
+import React from 'react';
+import Logo from './Logo';
+
+// CSS
+import './Footer.css';
 
 const Footer = () => {
   return (
@@ -15,7 +18,7 @@ const Footer = () => {
         <a href='/'>About</a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

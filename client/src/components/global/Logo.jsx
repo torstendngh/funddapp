@@ -1,9 +1,14 @@
-import React from 'react'
-import './Logo.css'
+// Modules
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// CSS
+import './Logo.css';
+
 const Logo = () => {
+  
   const navigate = useNavigate();
+
   return (
     <button to="/" className='logo' onClick={() => {
       navigate('/')
@@ -15,7 +20,7 @@ const Logo = () => {
         Chain<span>Funding</span>
       </p>
     </button>
-  )
-}
+  );
+};
 
-export default Logo
+export default Logo;

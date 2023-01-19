@@ -1,14 +1,14 @@
-import React from 'react'
-import './ProfileIcon.css'
-import { toSvg } from 'jdenticon'
+// Modules
+import React from 'react';
+import { toSvg } from 'jdenticon';
+
+// CSS
+import './ProfileIcon.css';
 
 const ProfileIcon = ({ handleClick, address }) => {
-
   return (
-    <button id='profile-icon' onClick={handleClick} dangerouslySetInnerHTML={{__html: toSvg(address, 44)}}>
-      
-    </button>
-  )
-}
+    <button id='profile-icon' onClick={handleClick} dangerouslySetInnerHTML={{__html: toSvg(address, 44)}}></button>
+  );
+};
 
-export default ProfileIcon
+export default ProfileIcon;

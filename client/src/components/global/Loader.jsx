@@ -1,5 +1,8 @@
-import React from 'react'
-import './Loader.css'
+// Modules
+import React from 'react';
+
+// CSS
+import './Loader.css';
 
 const Loader = ({ text }) => {
   return (
@@ -49,7 +52,7 @@ const Loader = ({ text }) => {
       {text && text}
 
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

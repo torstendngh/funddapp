@@ -1,11 +1,16 @@
+// Modules
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react'
 
+// Context
 import { StateContextProvider } from './context';
 
+// Components
 import App from './App';
+
+// CSS
 import './global.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

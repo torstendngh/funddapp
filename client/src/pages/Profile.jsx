@@ -1,10 +1,17 @@
+// Modules
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Profile.css'
+
+// Context
 import { useStateContext } from "../context";
+
+// Components
 import Loader from '../components/global/Loader'
 import Card from '../components/global/Card';
 import AccentButton from '../components/global/AccentButton';
+
+// CSS
+import './Profile.css';
 
 const Profile = () => {
 
@@ -19,11 +26,11 @@ const Profile = () => {
     const data = await getUserProjects();
     setProjects(data);
     setIsLoadingProjects(false);
-  }
+  };
 
   const handleNavigate = (project) => {
-    navigate(`/project-details/${project.title}`, { state: project })
-  }
+    navigate(`/project-details/${project.title}`, { state: project });
+  };
 
   useEffect(() => {
     if(contract) fetchProjects();
@@ -66,7 +73,7 @@ const Profile = () => {
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

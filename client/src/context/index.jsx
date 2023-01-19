@@ -1,5 +1,5 @@
+// Modules
 import React, { useContext, createContext } from 'react';
-
 import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite, useChainId } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 import unidecode from 'unidecode'
@@ -24,11 +24,11 @@ export const StateContextProvider = ({ children }) => {
         form.target,
         new Date(form.deadline).getTime(), // deadline,
         form.image
-      ])
+      ]);
     } catch (error) {
-      console.log("contract call failure", error)
+      console.log("contract call failure", error);
     }
-  }
+  };
 
   const getProjects = async () => {
     const projects = await contract.call('getCampaigns');
@@ -45,7 +45,7 @@ export const StateContextProvider = ({ children }) => {
     }));
 
     return parsedProjects;
-  }
+  };
 
   const getUserProjects = async () => {
     const allProjects = await getProjects();
@@ -53,10 +53,10 @@ export const StateContextProvider = ({ children }) => {
     const filteredProjects = allProjects.filter((project) => project.owner === address);
 
     return filteredProjects;
-  }
+  };
 
   const getSearchProjects = async (search) => {
-    if (!search || search == null) search = ""
+    if (!search || search == null) search = "";
     const allProjects = await getProjects();
 
     const filteredByTitle = allProjects.filter((project) => 
@@ -71,7 +71,7 @@ export const StateContextProvider = ({ children }) => {
           .replace(/\s/g, "")
         )
       )
-    )
+    );
 
     const filteredByDescription = allProjects.filter((project) => 
       unidecode(
@@ -85,16 +85,15 @@ export const StateContextProvider = ({ children }) => {
           .replace(/\s/g, "")
         )
       )
-    )
+    );
 
     return [filteredByTitle, filteredByDescription];
-  }
+  };
 
   const donate = async (pId, amount) => {
     const data = await contract.call('donateToCampaign', pId, { value: ethers.utils.parseEther(amount)});
-
     return data;
-  }
+  };
 
   const getDonations = async (pId) => {
     const donations = await contract.call('getDonators', pId);
@@ -106,11 +105,11 @@ export const StateContextProvider = ({ children }) => {
       parsedDonations.push({
         donator: donations[0][i],
         donation: ethers.utils.formatEther(donations[1][i].toString())
-      })
+      });
     }
 
     return parsedDonations;
-  }
+  };
 
 
   return (
@@ -131,7 +130,7 @@ export const StateContextProvider = ({ children }) => {
     >
       {children}
     </StateContext.Provider>
-  )
-}
+  );
+};
 
 export const useStateContext = () => useContext(StateContext);

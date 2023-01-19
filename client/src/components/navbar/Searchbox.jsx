@@ -1,15 +1,19 @@
-import React from 'react'
-import './Searchbox.css'
+// Modules
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// CSS
+import './Searchbox.css';
+
 const Searchbox = () => {
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
   
   const handleSearch = (e) => {
     if (e.key === 'Enter'){
-      navigate(`/search`, { state: e.target.value })
+      navigate(`/search`, { state: e.target.value });
     }
-  }
+  };
 
   return (
     <div className='searchbox'>
@@ -18,7 +22,7 @@ const navigate = useNavigate();
       </svg>
       <input type="search" placeholder="Search.." onKeyDown={(e) => handleSearch(e)}/>
     </div>
-  )
-}
+  );
+};
 
 export default Searchbox;

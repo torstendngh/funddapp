@@ -1,9 +1,16 @@
+// Modules
 import React, { useState, useEffect } from 'react';
-import Loader from '../components/global/Loader'
-import Card from '../components/global/Card';
-import './Search.css'
 import { useLocation, useNavigate } from 'react-router-dom';
+
+// Context
 import { useStateContext } from "../context";
+
+// Components
+import Card from '../components/global/Card';
+import Loader from '../components/global/Loader';
+
+// CSS
+import './Search.css';
 
 const Search = () => {
 
@@ -71,7 +78,7 @@ const Search = () => {
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

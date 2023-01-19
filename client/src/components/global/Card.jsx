@@ -1,10 +1,13 @@
+// Modules
 import React from 'react';
-import './Card.css';
 import { daysLeft, calculateBarPercentage } from '../../utils';
 import { useNavigate } from 'react-router-dom';
-import { toSvg } from 'jdenticon'
+import { toSvg } from 'jdenticon';
 
-function truncateString(str, num) {
+// CSS
+import './Card.css';
+
+const truncateString = (str, num) => {
   if (str.length > num) {
     return str.slice(0, num) + "...";
   } else {
@@ -15,9 +18,8 @@ function truncateString(str, num) {
 const Card = ({ title, owner, target, amountCollected, deadline, image, handleClick }) => {
 
   const remainingDays = daysLeft(deadline);
-  const percentage = calculateBarPercentage(target, amountCollected)
-
-  const truncatedOwnerString = truncateString(`${owner}`, 10)
+  const percentage = calculateBarPercentage(target, amountCollected);
+  const truncatedOwnerString = truncateString(`${owner}`, 10);
 
   return (
     <div className='card' onClick={handleClick}>

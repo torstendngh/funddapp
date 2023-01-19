@@ -1,12 +1,19 @@
-import React, { Fragment, useState, useEffect } from 'react';
+// Modules
+import React, { Fragment } from 'react';
+import { useStateContext } from "../../context";
+import { useNavigate } from 'react-router-dom';
+
+// Components
 import ProfileIcon from './ProfileIcon';
 import AccentButton from '../global/AccentButton';
 import Logo from '../global/Logo';
-import './Navbar.css';
 import Searchbar from './Searchbox';
-import { useStateContext } from "../../context";
-import { useNavigate } from 'react-router-dom';
-import metamaskIcon from "../../assets/img/metamask-icon.png"
+
+// Images
+import metamaskIcon from "../../assets/img/metamask-icon.png";
+
+// CSS
+import './Navbar.css';
 
 const Navbar = () => {
 
