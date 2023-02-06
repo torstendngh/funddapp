@@ -5,81 +5,74 @@ import { ethers } from "ethers";
 import { checkIfImage } from '../utils';
 
 // Context
-import { useStateContext } from "../context";
+import { useStateContext } from "../context/contractInterface";
 
 // Components
 import Loader from '../components/global/Loader';
 import AccentButton from '../components/global/AccentButton';
+import TextField from '../components/createProject/TextField'
 
 // CSS
 import './CreateProject.css';
 
-const TextField = ({ label, placeholder, inputType, isTextArea, value, handleChange, icon, required, min }) => {
-  return (
-    <div className='text-field'>
-      <p className='label'>{label}</p>
-      <div className='box'>
-        <div className='icon'>
-          {icon}
-        </div>
-        {isTextArea ? (
-          <textarea
-            rows={4} 
-            type={inputType} 
-            placeholder={placeholder} 
-            value={value} 
-            onChange={handleChange} 
-            required={required || true}
-            min={min}
-          />
-        ) : (
-          <input 
-            step="0.001" 
-            type={inputType} 
-            placeholder={placeholder} 
-            value={value} 
-            onChange={handleChange} 
-            required={required || true}
-            min={min}
-          />
-        )}
-        
-      </div>
-    </div>
-  );
-};
-
+/**
+ * Create project page
+ */
 const CreateProject = () => {
 
   const navigate = useNavigate();
+
+  // When the project is getting created this turns true to show "Loader" component
   const [isLoadingCreation, setIsLoadingCreation] = useState(false);
-  const { publishProject, MIN_TARGET_AMOUNT } = useStateContext();
+
+  const { publishProject, MIN_GOAL_AMOUNT } = useStateContext();
+
+  // Form to be sent for project creation
   const [form, setForm] = useState({
     name: '',
     title: '',
     description: '',
-    target: '', 
+    goal: '', 
     deadline: '',
     image: ''
   });
 
+  // Sync UI with form  state
   const handleFormFieldChange = (fieldName, e) => {
     setForm({ ...form, [fieldName]: e.target.value });
   };
 
+  // When "Launch new Project!" button is pressed
   const handleSubmit = async (e) => {
+
+    // Important! Stop default behaviour of form "submit" button
     e.preventDefault();
 
     checkIfImage(form.image, async (exists) => {
-      if(exists && form.target >= MIN_TARGET_AMOUNT) {
+
+      // Check if URL points to valid image
+      if(exists && form.goal >= MIN_GOAL_AMOUNT) {
+
+        // Show "Loader" component
         setIsLoadingCreation(true);
-        await publishProject({ ...form, target: ethers.utils.parseUnits(form.target, 18)});
+
+        // Publish project
+        await publishProject({ ...form, goal: ethers.utils.parseUnits(form.goal, 18)});
+
+        // Hide "Loader" again
         setIsLoadingCreation(false);
+
+        // Navigate to homepage
         navigate('/');
+
       } else {
+
+        // Reset image form
         setForm({ ...form, image: '' });
+
       }
     });
+
   };
 
   return (
@@ -90,6 +83,7 @@ const CreateProject = () => {
           <p>Create New Project</p>
         </div>
 
+        {/* Show "Loader" component or form */}
         { isLoadingCreation ?
           <Loader text={"Uploading Project to Blockchain.."}/>
           :
@@ -131,11 +125,11 @@ const CreateProject = () => {
 
             <div className='side-by-side'>
               <TextField
-                handleChange={(e) => handleFormFieldChange('target', e)}
+                handleChange={(e) => handleFormFieldChange('goal', e)}
                 inputType="number"
-                min={MIN_TARGET_AMOUNT}
+                min={MIN_GOAL_AMOUNT}
                 label={"Goal (ETH)"}
-                placeholder={MIN_TARGET_AMOUNT}
+                placeholder={MIN_GOAL_AMOUNT}
                 icon={<svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3.747a.75.75 0 0 1 .75-.75h16.504a.75.75 0 0 1 .6 1.2L16.69 9.748l4.164 5.552a.75.75 0 0 1-.6 1.2H4.5v4.749a.75.75 0 0 1-.648.743L3.75 22a.75.75 0 0 1-.743-.648L3 21.249V3.747Zm15.754.75H4.5V15h14.254l-3.602-4.802a.75.75 0 0 1 0-.9l3.602-4.8Z" fill="currentColor"/></svg>}
               />
               <TextField
@@ -148,6 +142,7 @@ const CreateProject = () => {
 
             <div className='devider'></div>
 
+            {/* "Launch project" submit button */}
             <AccentButton
               buttonType="submit"
               height={"64px"}

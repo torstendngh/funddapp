@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react'
 
 // Context
-import { StateContextProvider } from './context';
+import { StateContextProvider } from './context/contractInterface';
 
 // Components
 import App from './App';

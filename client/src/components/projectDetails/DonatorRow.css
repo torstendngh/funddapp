@@ -1,0 +1,32 @@
+.donator-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6B6B6F;
+  padding: 4px 8px;
+}
+
+.donator-row:hover {
+  background-color: rgba(255, 255, 255, 0.073);
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.donator-row > .user {
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.donator-row > .user > .profile-picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donator-row > .amount {
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 600, 'slnt' 0, 'CRSV' 0;
+  font-size: 24px;
+}

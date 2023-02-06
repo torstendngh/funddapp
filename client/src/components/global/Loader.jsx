@@ -4,12 +4,23 @@ import React from 'react';
 // CSS
 import './Loader.css';
 
+/**
+ * @typedef Props
+ * @prop {string} [text] - Text to be displayed underneath loader
+ */
+
+/**
+ * Loader component
+ * @param {Props} props
+ */
 const Loader = ({ text }) => {
   return (
     <div className='loader'>
 
+      {/* Loader */}
       <div>
 
+        {/* Spinner */}
         <svg className='loader-0' width="128" height="128" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#a261f3">
           <g fill="none" fillRule="evenodd">
             <g transform="translate(1 1)" strokeWidth="2">
@@ -28,6 +39,7 @@ const Loader = ({ text }) => {
           </g>
         </svg>
 
+        {/* Logo flipping in 3D */}
         <svg className='loader-1' xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 1000 1000">
           <defs>
             <linearGradient id="linear-gradient" x1="1" x2="0.001" gradientUnits="objectBoundingBox">
@@ -44,13 +56,11 @@ const Loader = ({ text }) => {
             <path id="Path_29" data-name="Path 29" d="M163.275,62.2C107.824,62.2,62.2,107.824,62.2,163.275v248.8c0,55.451,45.624,101.075,101.075,101.075H233.25v69.975c0,55.451,45.624,101.075,101.075,101.075h248.8c55.451,0,101.075-45.624,101.075-101.075v-248.8c0-55.451-45.624-101.075-101.075-101.075H513.15V163.275c0-55.451-45.624-101.075-101.075-101.075ZM513.15,233.25V412.075c0,55.451-45.624,101.075-101.075,101.075H233.25V334.325c0-55.451,45.624-101.075,101.075-101.075Z" fill="#fff"/>
           </g>
         </svg>
-          
-
 
       </div>
 
-      {text && text}
-
+      {/* Optional text underneath loader */}
+      {!!text && text}
     </div>
   );
 };

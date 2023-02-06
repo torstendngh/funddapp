@@ -1,6 +1,5 @@
 .home {
   width: 100%;
-
   padding: 0 var(--px-page-padding);
   padding-top: calc(var(--px-top-padding) + 32px);
   display: flex;

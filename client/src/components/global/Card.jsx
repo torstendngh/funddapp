@@ -1,43 +1,70 @@
 // Modules
 import React from 'react';
-import { daysLeft, calculateBarPercentage } from '../../utils';
-import { useNavigate } from 'react-router-dom';
-import { toSvg } from 'jdenticon';
+import { daysLeft, calculateBarPercentage, truncateString } from '../../utils';
+import { toSvg } from '../../utils/jdenticon';
 
 // CSS
 import './Card.css';
 
-const truncateString = (str, num) => {
-  if (str.length > num) {
-    return str.slice(0, num) + "...";
-  } else {
-    return str;
-  }
-}
+/**
+ * @typedef Props
+ * @prop {string} title
+ * @prop {string} owner
+ * @prop {number} goal
+ * @prop {number} amountCollected
+ * @prop {date} deadline
+ * @prop {string} image - Image URL
+ * @prop {function} handleClick
+ */
 
-const Card = ({ title, owner, target, amountCollected, deadline, image, handleClick }) => {
+/**
+ * Project card component
+ * @param {Props} props
+ */
+const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClick }) => {
 
   const remainingDays = daysLeft(deadline);
-  const percentage = calculateBarPercentage(target, amountCollected);
+  const percentage = calculateBarPercentage(goal, amountCollected);
+
+  // Truncate address to take up less space
   const truncatedOwnerString = truncateString(`${owner}`, 10);
+
+  // If a prop isn't passed over correctly, default to these values
+  const defaultValues = {
+    title: "Crowdfunding Project",
+    address: "Address",
+    percentage: 0,
+    remainingDays: 0
+  }
 
   return (
     <div className='card' onClick={handleClick}>
+
+      {/* Project image */}
       <div className='image-container'>
-        {image && <img src={image} alt="" />}
+        {image && <img src={image} alt={title || defaultValues.title} />}
       </div>
-      <p className='title'>{title || "Crowdfunding Project"}</p>
+
+      {/* Project title */}
+      <p className='title'>{title || defaultValues.title}</p>
+
+      {/* Project owner profile picture and owner address */}
       <div className='owner'>
         <div className='profile-picture' dangerouslySetInnerHTML={{__html: toSvg(owner, 20)}}></div>
-        {truncatedOwnerString || "username"}
+        {truncatedOwnerString || defaultValues.address}
       </div>
+
+      {/* Details container */}
       <div className='detail-container'>
-        <p className='percentage'>{percentage}<span>%</span></p>
-        <p className='time'>{remainingDays} {remainingDays == 1 ? "day left" : "days left"}</p>
+        <p className='percentage'>{percentage || defaultValues.percentage}<span>%</span></p>
+        <p className='time'>{remainingDays || defaultValues.remainingDays} {remainingDays == 1 ? "day left" : "days left"}</p>
       </div>
+
+      {/* Progress bar */}
       <div className='progress-container'>
-        <div className='progress' style={{ width: `${percentage}%`, maxWidth: '100%'}}></div>
+        <div className='progress' style={{ width: `${percentage || defaultValues.percentage}%`, maxWidth: '100%'}}></div>
       </div>
+
     </div>
   );
 };

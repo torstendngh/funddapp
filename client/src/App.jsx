@@ -19,11 +19,19 @@ import './App.css';
 // Fonts
 import './assets/fonts/Recursive_VF_1.084.woff2';
 
+/**
+ * Main app page
+ */
 const App = () => {
   return (
     <div className='app'>
+
+      {/* Navbar */}
       <Navbar/>
+
       <div className='page-container'>
+
+        {/* Pages container */}
         <div style={{flex: 1, minHeight: "100vh", height: "100%", display: "flex"}}>
           <Routes>
             <Route path='/' element={<Home/>}/>
@@ -35,8 +43,11 @@ const App = () => {
           </Routes>
         </div>
         
+        {/* Footer */}
         <Footer/>
+
       </div>
+
     </div>
   );
 };

@@ -9,6 +9,9 @@ import tut2 from '../assets/img/tut2.jpg';
 // CSS
 import './GetStarted.css';
 
+/**
+ * Page for beginnert to get started
+ */
 const GetStarted = () => {
   return (
     <div className='get-started'>

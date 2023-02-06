@@ -2,7 +2,8 @@
 import React, { useContext, createContext } from 'react';
 import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite, useChainId } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
-import unidecode from 'unidecode'
+import unidecode from 'unidecode';
+import { daysLeft } from '../utils';
 
 const StateContext = createContext();
 
@@ -15,8 +16,8 @@ export const StateContextProvider = ({ children }) => {
   const disconnect = useDisconnect();
   const chainId = useChainId();
 
-  // Minimum target amount in ETH
-  const MIN_TARGET_AMOUNT = 0.001;
+  // Minimum goal amount in ETH
+  const MIN_GOAL_AMOUNT = 0.001;
 
   const publishProject = async (form) => {
     try {
@@ -24,7 +25,7 @@ export const StateContextProvider = ({ children }) => {
         address, // owner
         form.title, // title
         form.description, // description
-        form.target,
+        form.goal,
         new Date(form.deadline).getTime(), // deadline,
         form.image
       ]);
@@ -40,14 +41,16 @@ export const StateContextProvider = ({ children }) => {
       owner: project.owner,
       title: project.title,
       description: project.description,
-      target: ethers.utils.formatEther(project.target.toString()),
+      goal: ethers.utils.formatEther(project.target.toString()),
       deadline: project.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(project.amountCollected.toString()),
       image: project.image,
       pId: i
     }));
 
-    return parsedProjects;
+    const currentlyRunningProjects = parsedProjects.filter((project) => daysLeft(project.deadline) >= 0);
+
+    return currentlyRunningProjects;
   };
 
   const getUserProjects = async () => {
@@ -114,7 +117,6 @@ export const StateContextProvider = ({ children }) => {
     return parsedDonations;
   };
 
-
   return (
     <StateContext.Provider
       value={{ 
@@ -127,7 +129,7 @@ export const StateContextProvider = ({ children }) => {
         getSearchProjects,
         getProjects,
         getUserProjects,
-        MIN_TARGET_AMOUNT,
+        MIN_GOAL_AMOUNT,
         donate,
         getDonations
       }}
