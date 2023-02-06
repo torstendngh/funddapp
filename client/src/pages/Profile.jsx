@@ -20,7 +20,7 @@ import './Profile.css';
 const Profile = () => {
 
   const navigate = useNavigate();
-  const { disconnect, address, contract, getUserProjects, connect } = useStateContext();
+  const { disconnect, address, contract, getUserProjects, connect, withdrawFunds } = useStateContext();
 
   // True when projects are loading
   const [isLoadingProjects, setIsLoadingProjects] = useState(false);
@@ -98,6 +98,8 @@ const Profile = () => {
             goal={project.goal}
             amountCollected={project.amountCollected}
             handleClick={() => handleNavigateToProject(navigate, project)}
+            hasWithdrawButton={true}
+            handleWithdraw={() => withdrawFunds(project.id)}
           />)
         }
 

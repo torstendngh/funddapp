@@ -77,7 +77,7 @@ const Search = () => {
             deadline={project.deadline}
             goal={project.goal}
             amountCollected={project.amountCollected}
-            handleClick={() => handleNavigate(project)}
+            handleClick={() => handleNavigateToProject(navigate, project)}
           />)
         }
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import { daysLeft, calculateBarPercentage, truncateString } from '../../utils';
 import { toSvg } from '../../utils/jdenticon';
+import AccentButton from './AccentButton';
 
 // CSS
 import './Card.css';
@@ -21,7 +22,7 @@ import './Card.css';
  * Project card component
  * @param {Props} props
  */
-const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClick }) => {
+const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClick, hasWithdrawButton = false, handleWithdraw }) => {
 
   const remainingDays = daysLeft(deadline);
   const percentage = calculateBarPercentage(goal, amountCollected);
@@ -35,6 +36,11 @@ const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClic
     address: "Address",
     percentage: 0,
     remainingDays: 0
+  }
+
+  const handleWithdrawClick = (event) => {
+    event.stopPropagation()
+    handleWithdraw()
   }
 
   return (
@@ -64,6 +70,13 @@ const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClic
       <div className='progress-container'>
         <div className='progress' style={{ width: `${percentage || defaultValues.percentage}%`, maxWidth: '100%'}}></div>
       </div>
+
+      {
+        hasWithdrawButton &&
+        <AccentButton handleClick={handleWithdrawClick}>
+          Withdraw Funds!
+        </AccentButton>
+      }
 
     </div>
   );

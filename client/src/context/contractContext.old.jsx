@@ -8,7 +8,7 @@ import { daysLeft } from '../utils';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract, isLoading, error } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D");
+  const { contract } = useContract('0x8409510c5aC4Ec2199a31C2313dD5B8f622aEC8F');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
 
   const address = useAddress();
@@ -19,22 +19,14 @@ export const StateContextProvider = ({ children }) => {
   // Minimum goal amount in ETH
   const MIN_GOAL_AMOUNT = 0.001;
 
-  /**
-   * Publishes project to blockchain
-   * @param {object} form 
-   */
   const publishProject = async (form) => {
     try {
-      
-      const dateNow = new Date().getTime()
-      const deadlineDate = new Date(form.deadline).getTime()
-      const duration = Math.floor(( deadlineDate - dateNow ) / 1000)
-
       const data = await createCampaign([
-        duration,
+        address, // owner
+        form.title, // title
+        form.description, // description
         form.goal,
-        form.title,
-        form.description,
+        new Date(form.deadline).getTime(), // deadline,
         form.image
       ]);
     } catch (error) {
@@ -42,38 +34,25 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
-  const withdrawFunds = async (campaignID) => {
-    const data = await contract.call("withdrawFunds", campaignID)
-  }
-
-  /**
-   * Get all projects on blockchain
-   * @returns {array} All projects
-   */
   const getProjects = async () => {
-    const projects = await contract.call('getAllCampaigns');
+    const projects = await contract.call('getCampaigns');
 
     const parsedProjects = projects.map((project, i) => ({
       owner: project.owner,
       title: project.title,
       description: project.description,
-
-      goal: ethers.utils.formatEther(project.raisingGoal.toString()),
+      goal: ethers.utils.formatEther(project.target.toString()),
       deadline: project.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(project.amountCollected.toString()),
       image: project.image,
-      pId: project.campaignID
+      pId: i
     }));
 
-    const currentlyRunningProjects = parsedProjects.filter((project) => project.deadline >= (Date.now() / 1000) );
+    const currentlyRunningProjects = parsedProjects.filter((project) => daysLeft(project.deadline) >= 0);
 
     return currentlyRunningProjects;
   };
 
-  /**
-   * Get all projects created by user
-   * @returns {array} All projects by user
-   */
   const getUserProjects = async () => {
     const allProjects = await getProjects();
 
@@ -82,11 +61,6 @@ export const StateContextProvider = ({ children }) => {
     return filteredProjects;
   };
 
-  /**
-   * Get all projects that include string in title or description
-   * @param {string} search 
-   * @returns {array}
-   */
   const getSearchProjects = async (search) => {
     if (!search || search == null) search = "";
     const allProjects = await getProjects();
@@ -122,9 +96,8 @@ export const StateContextProvider = ({ children }) => {
     return [filteredByTitle, filteredByDescription];
   };
 
-
-  const donate = async (campaignID, amount) => {
-    const data = await contract.call('donateToCampaign', campaignID, { value: ethers.utils.parseEther(amount)});
+  const donate = async (pId, amount) => {
+    const data = await contract.call('donateToCampaign', pId, { value: ethers.utils.parseEther(amount)});
     return data;
   };
 
@@ -158,8 +131,7 @@ export const StateContextProvider = ({ children }) => {
         getUserProjects,
         MIN_GOAL_AMOUNT,
         donate,
-        getDonations,
-        withdrawFunds
+        getDonations
       }}
     >
       {children}

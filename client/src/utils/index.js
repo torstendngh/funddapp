@@ -1,16 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-
 /**
  * Works out days left until deadline
  * @param {date} deadline 
  * @returns {number}
  */
 export const daysLeft = (deadline) => {
-  const difference = new Date(deadline).getTime() - Date.now();
-  const remainingDays = difference / (1000 * 3600 * 24);
-
+  const difference = deadline - (Date.now() / 1000);
+  const remainingDays = difference / 86400;
   return remainingDays.toFixed(0);
 };
 

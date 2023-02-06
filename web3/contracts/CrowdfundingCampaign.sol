@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.17;
 
+// best solution for no backend. Everything works, but it required the second
+// sctruct that is there to show data from the first one and be iterable.
 
 contract CrowdfundingCampaign {
-
     address payable public deployer;
 
     constructor() {
@@ -11,42 +12,54 @@ contract CrowdfundingCampaign {
     }
 
     struct Campaign {
-        uint campaignID;
+        uint256 campaignID;
         address payable owner;
         string title;
         string description;
         string image;
-        uint duration;
-        uint raisingGoal; //you called it target
-        uint deadline;
-        uint amountCollected;
-        mapping(address => uint) donators;
+        uint256 duration;
+        uint256 raisingGoal; //you called it target
+        uint256 deadline;
+        uint256 amountCollected;
+        mapping(address => uint256) donators;
     }
 
-    mapping(uint => Campaign) public campaigns;
+    mapping(uint256 => Campaign) public campaigns;
 
-    uint public numberOfCampaigns = 0;
+    event LogCampaign(
+        uint256 campaignID,
+        address payable owner,
+        string title,
+        string description,
+        string image,
+        uint256 duration,
+        uint256 raisingGoal,
+        uint256 deadline,
+        uint256 amountCollected
+    );
+
+    uint256 public numberOfCampaigns = 0;
 
     function createCampaign(
-        uint _duration,
-        uint _raisingGoal,
+        uint256 _duration,
+        uint256 _raisingGoal,
         string memory _title,
         string memory _description,
         string memory _image
-    ) public returns (uint) {
-
+    ) public returns (uint256) {
         // Check for past campaigns that have passed deadline and have no donations
-        for (uint i = 0; i < numberOfCampaigns; i++) {
+        for (uint256 i = 0; i < numberOfCampaigns; i++) {
             Campaign storage campaign = campaigns[i];
-            if (block.timestamp > campaign.deadline && campaign.amountCollected == 0) {
+            if (
+                block.timestamp > campaign.deadline &&
+                campaign.amountCollected == 0
+            ) {
                 delete campaigns[i];
-            }
+            } // delete old and empty campaignes
         }
 
-        uint _campaignID = numberOfCampaigns;
-        uint _deadline = block.timestamp + _duration;
-
-        require(campaigns[_campaignID].deadline < getCurrentTime(), "The deadline should be in the future");
+        uint256 _campaignID = ++numberOfCampaigns; //assign campaignID
+        uint256 _deadline = block.timestamp + _duration; //calculate deadline based on duration (better, than taking deadline directly, since it doesn't need checks for past time)
 
         campaigns[_campaignID].campaignID = _campaignID;
         campaigns[_campaignID].owner = payable(msg.sender);
@@ -58,99 +71,122 @@ contract CrowdfundingCampaign {
         campaigns[_campaignID].deadline = _deadline;
         campaigns[_campaignID].amountCollected = 0;
 
-        numberOfCampaigns++;
+        emit LogCampaign(
+            campaigns[_campaignID].campaignID,
+            campaigns[_campaignID].owner,
+            campaigns[_campaignID].title,
+            campaigns[_campaignID].description,
+            campaigns[_campaignID].image,
+            campaigns[_campaignID].duration,
+            campaigns[_campaignID].raisingGoal,
+            campaigns[_campaignID].deadline,
+            campaigns[_campaignID].amountCollected
+        );
 
-        return numberOfCampaigns - 1;
+        return numberOfCampaigns; // <-- get total amount of campaigns, so next one will have next ID.
     }
 
     // function to add ETH to a specific campaign, checked if it's still ongoing, stores donator and amount of ETH
-    function donateToCampaign(
-        uint _campaignID
-    ) public payable {
+    function donateToCampaign(uint256 _campaignID) public payable {
         Campaign storage campaign = campaigns[_campaignID];
-
-        require(campaign.campaignID >= 0, "Out of range.");
-        require(block.timestamp < campaign.deadline, "Campaign deadline has passed.");
-
-        campaign.amountCollected += msg.value;  // <-- transfer msg.value here and add it to amountCollected
-        campaign.donators[msg.sender] += msg.value;  // <-- store msg.value here linked to a donator address, so we can use it for the refund function later
+        require(campaign.campaignID != 0, "Campaign does not exist.");
+        require(
+            block.timestamp < campaign.deadline,
+            "Campaign deadline has passed."
+        );
+        campaign.amountCollected += msg.value; // <-- transfer msg.value here and add it to amountCollected
+        campaign.donators[msg.sender] += msg.value; // <-- store msg.value here linked to a donator address, so we can use it for the refund function later
     }
-    
+
     // function to return ETH to donator on calling it
-    function refund(uint _campaignID) public {
+    function refund(uint256 _campaignID) public {
         Campaign storage campaign = campaigns[_campaignID];
+        require(campaign.campaignID != 0, "Campaign does not exist.");
+        require(
+            campaign.amountCollected < campaign.raisingGoal,
+            "Campaign goal has been reached."
+        );
+        require(
+            campaign.donators[msg.sender] > 0,
+            "You have not contributed to this campaign."
+        );
+        // require(block.timestamp > campaign.deadline, "Campaign deadline has not passed."); // <-- optional function to refund only if campaign fails
 
-        require(campaign.campaignID >= 0, "Out of range.");
-        require(campaign.amountCollected < campaign.raisingGoal, "Campaign goal has been reached.");
-        // require(block.timestamp > campaign.deadline, "Campaign deadline has not passed."); // <-- refund only if campaign fails
-        require(campaign.donators[msg.sender] > 0, "You have not contributed to this campaign.");
-
-        address payable sender = payable(msg.sender);
+        address payable sender = payable(msg.sender); // <-- assign sender value
 
         // Refund the caller's contribution
-        uint amount = campaign.donators[msg.sender]; // <-- get the transfer value from mapping storage
+        uint256 amount = campaign.donators[msg.sender]; // <-- get the transfer value from mapping storage
         (bool sent, ) = sender.call{value: amount}(""); // <-- check if the transfer was successful, return 'sent' on success
-
         require(sent, "ETH Refund failed"); // <-- if no 'sent', return an error
-
-        campaign.donators[msg.sender] = 0;  // <-- set contribution to 0
+        campaign.donators[msg.sender] = 0; // <-- set contribution to 0
         campaign.amountCollected -= amount; // <-- decrease campaigns 'amountCollected', delete campaign when all funds returned
-
-        if (campaign.amountCollected == 0 && block.timestamp > campaign.deadline){
+        if (
+            campaign.amountCollected == 0 && block.timestamp > campaign.deadline
+        ) {
             delete campaigns[_campaignID];
         }
     }
 
-    function withdrawFunds(uint _campaignID) public { // <-- only available for Campaign creator, if funds were fully raised
-        Campaign storage campaign = campaigns[_campaignID];
+    function withdrawFunds(uint256 _campaignID) public {
+        // <-- only available for Campaign creator, if funds were fully raised
 
-        require(campaign.campaignID >= 0, "Out of range.");
-        require(campaign.amountCollected >= campaign.raisingGoal, "Campaign goal has not been reached."); // <-- check fund goal
-        require(msg.sender == campaign.owner, "Only the campaign creator can withdraw funds."); // <-- check caller's adress, fail if not owner
-        
-        uint commission = campaign.amountCollected * 5 / 100;
-        uint withdrawalAmount = campaign.amountCollected - commission;
+        Campaign storage campaign = campaigns[_campaignID];
+        require(campaign.campaignID != 0, "Campaign does not exist.");
+        require(
+            campaign.amountCollected >= campaign.raisingGoal,
+            "Campaign goal has not been reached."
+        ); // <-- check fund goal
+        require(
+            msg.sender == campaign.owner,
+            "Only the campaign creator can withdraw funds."
+        ); // <-- check caller's adress, fail if not owner
+
+        uint256 commission = (campaign.amountCollected * 5) / 100; // <-- calculate comission
+        uint256 withdrawalAmount = campaign.amountCollected - commission; // <-- calculate withdrawalAmount
         (bool sent, ) = campaign.owner.call{value: withdrawalAmount}(""); // <-- withdraw funds only for called Campaign, returns 'sent' on success
-        
         require(sent, "ETH Withdrawal failed"); // <-- if no 'sent', return an error
-        
-        (bool commissioned, ) = deployer.call{value: commission}("");
-        
+
+        (bool commissioned, ) = deployer.call{value: commission}(""); // <-- same but for comission
         require(commissioned, "Commission transfer failed");
 
         delete campaigns[_campaignID]; // <-- remove our withdrawn Campaign from our mapping storage
     }
 
     struct CampaignView {
-        uint campaignID;
+        uint256 campaignID;
         address owner;
-        uint duration;
-        uint raisingGoal;
-        uint deadline;
-        uint amountCollected;
+        uint256 duration;
+        uint256 raisingGoal;
+        uint256 deadline;
+        uint256 amountCollected;
         string title;
         string description;
         string image;
     }
 
+    //function to get all created campaigns via CampaignView. Doesn't give info about donators, that's why it works for iteration (no nested mapping)
     function getAllCampaigns() public view returns (CampaignView[] memory) {
         CampaignView[] memory result = new CampaignView[](numberOfCampaigns);
-
-        for (uint j = 0; j < numberOfCampaigns; j++) {
-            result[j].campaignID = campaigns[j].campaignID;
-            result[j].owner = campaigns[j].owner;
-            result[j].duration = campaigns[j].duration;
-            result[j].raisingGoal = campaigns[j].raisingGoal;
-            result[j].deadline = campaigns[j].deadline;
-            result[j].amountCollected = campaigns[j].amountCollected;
-            result[j].title = campaigns[j].title;
-            result[j].description = campaigns[j].description;
-            result[j].image = campaigns[j].image;
+        uint256 i = 0;
+        for (uint256 j = 0; j <= numberOfCampaigns; j++) {
+            if (campaigns[j].campaignID != 0) {
+                result[i].campaignID = campaigns[j].campaignID;
+                result[i].owner = campaigns[j].owner;
+                result[i].duration = campaigns[j].duration;
+                result[i].raisingGoal = campaigns[j].raisingGoal;
+                result[i].deadline = campaigns[j].deadline;
+                result[i].amountCollected = campaigns[j].amountCollected;
+                result[i].title = campaigns[j].title;
+                result[i].description = campaigns[j].description;
+                result[i].image = campaigns[j].image;
+                i++;
+            }
         }
         return result;
     }
 
-    function getCurrentTime()public view returns(uint){ // <-- function to get a current time, used that only for testing
+    function getCurrentTime() public view returns (uint256) {
+        // <-- function to get a current time, used that only for testing
         return block.timestamp;
     }
 }

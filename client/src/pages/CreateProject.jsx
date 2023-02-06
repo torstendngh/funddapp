@@ -29,7 +29,6 @@ const CreateProject = () => {
 
   // Form to be sent for project creation
   const [form, setForm] = useState({
-    name: '',
     title: '',
     description: '',
     goal: '', 
@@ -37,7 +36,7 @@ const CreateProject = () => {
     image: ''
   });
 
-  // Sync UI with form  state
+  // Sync UI with form state
   const handleFormFieldChange = (fieldName, e) => {
     setForm({ ...form, [fieldName]: e.target.value });
   };
@@ -95,13 +94,6 @@ const CreateProject = () => {
                 label={"Project Title"}
                 placeholder={"Title"}
                 icon={<svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4.75A.75.75 0 0 1 5.75 4h12.5a.75.75 0 0 1 .75.75v2a.75.75 0 0 1-1.5 0V5.5h-4.75v13h1.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5h1.5v-13H6.5v1.25a.75.75 0 0 1-1.5 0v-2Z" fill="currentColor"/></svg>}
-              />
-              <TextField
-                handleChange={(e) => handleFormFieldChange('name', e)}
-                inputType="text"
-                label={"Username"}
-                placeholder={"Username"}
-                icon={<svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.754 14a2.249 2.249 0 0 1 2.25 2.249v.575c0 .894-.32 1.76-.902 2.438-1.57 1.834-3.957 2.739-7.102 2.739-3.146 0-5.532-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.435v-.577a2.249 2.249 0 0 1 2.249-2.25h11.501Zm0 1.5H6.253a.749.749 0 0 0-.75.749v.577c0 .536.192 1.054.54 1.461 1.253 1.468 3.219 2.214 5.957 2.214s4.706-.746 5.962-2.214a2.25 2.25 0 0 0 .541-1.463v-.575a.749.749 0 0 0-.749-.75ZM12 2.004a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" fill="currentColor"/></svg>}
               />
             </div>
             
