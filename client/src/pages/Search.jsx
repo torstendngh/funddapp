@@ -19,13 +19,11 @@ import './Search.css';
 const Search = () => {
 
   const navigate = useNavigate();
-  const { getSearchProjects, contract } = useStateContext();
+  const { getSearchProjects, contract } = useStateContext(); // Get contract info
 
-  // Get project object from previous page
-  const { state } = useLocation();
+  const { state } = useLocation(); // Get project object from previous page
 
-  // True if loading search results
-  const [isLoadingProjects, setIsLoadingProjects] = useState(false);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(false); // True if loading search results
 
   /**
    * Array with search results.
@@ -34,25 +32,23 @@ const Search = () => {
    */
   const [results, setResults] = useState([ [], [] ]);
 
-  // Get project
+  /**
+   * Fetches projects that include search prompt
+   * @param {string} search - the search prompt
+   */
   const fetchResults = async (search) => {
 
-    // Show "Loader"
-    setIsLoadingProjects(true);
+    setIsLoadingProjects(true); // Show "Loader"
 
-    // Get all projects
-    const data = await getSearchProjects(search);
+    const data = await getSearchProjects(search); // Get all projects
+    setResults(data); // Put projects into local array
 
-    // Put projects into local array
-    setResults(data);
+    setIsLoadingProjects(false);// Hide "Loader"
 
-    // Hide "Loader"
-    setIsLoadingProjects(false);
   }
 
   useEffect(() => {
-    // If contract connected, fetch search results
-    if(contract) fetchResults(state);
+    if(contract) fetchResults(state); // If contract connected, fetch search results
   }, [contract, state]);
 
   return (

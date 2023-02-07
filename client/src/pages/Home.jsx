@@ -20,10 +20,9 @@ import './Home.css';
 const Home = () => {
 
   const navigate = useNavigate();
-  const { address, contract, getProjects } = useStateContext();
+  const { address, contract, getProjects } = useStateContext(); // Get contract info
 
-  // True when projects are loading
-  const [isLoadingProjects, setIsLoadingProjects] = useState(false);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(false); // True when projects are loading
 
   /**
    * Array with all projects
@@ -34,25 +33,17 @@ const Home = () => {
   // Get all projects from blockchain
   const fetchProjects = async () => {
 
-    // Display "Loader" component
-    setIsLoadingProjects(true);
+    setIsLoadingProjects(true); // Display "Loader" component
 
-    // Get all projects
-    const data = await getProjects();
+    const data = await getProjects(); // Get all projects
+    setProjects(data); // Put projects into local array
 
-    // Put projects into local array
-    setProjects(data);
-
-    // Don't display "Loader" anymore
-    setIsLoadingProjects(false);
+    setIsLoadingProjects(false); // Don't display "Loader" anymore
 
   };
 
   useEffect(() => {
-
-    // If contract connected, get project on page load
-    if(contract) fetchProjects();
-
+    if(contract) fetchProjects(); // If contract connected, get project on page load
   }, [address, contract]);
 
   return (

@@ -5,8 +5,18 @@ import AccentButton from './AccentButton';
 // CSS
 import './NotificationWindow.css'
 
-const NotificationWindow = ({text, buttonText, handleButtonClick}) => {
+/**
+ * @typedef Props
+ * @prop {string} text - Text to be displayed in window
+ * @prop {string} buttonText - Text to be displayed in button
+ * @prop {function} handleButtonClick - What happens when button is clicked
+ */
 
+/**
+ * Notification window
+ * @param {Props} props
+ */
+const NotificationWindow = ({text, buttonText, handleButtonClick}) => {
   return (
     <div className='notification-window'>
       <div className='window'>

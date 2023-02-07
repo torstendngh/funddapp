@@ -5,19 +5,19 @@ import { ethers } from 'ethers';
 import unidecode from 'unidecode';
 import { dummyDonatorList } from './dummyDonatorList';
 
-const StateContext = createContext();
+const StateContext = createContext(); // Create a react context
 
 export const StateContextProvider = ({ children }) => {
-  const { contract, isLoading, error } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D");
-  const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
+  const { contract, isLoading, error } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D"); // Connect with contract
+  const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign'); // Get creation function
+  const { mutateAsync: withdrawFunds } = useContractWrite(contract, "withdrawFunds"); // Get withdrawFunds function
 
-  const address = useAddress();
-  const connect = useMetamask();
-  const disconnect = useDisconnect();
+  const address = useAddress(); // Get user address
+  const connect = useMetamask(); // Get connect with Metamask function
+  const disconnect = useDisconnect(); // Get disconnect function
   const chainId = useChainId();
 
-  // Minimum goal amount in ETH
-  const MIN_GOAL_AMOUNT = 0.001;
+  const MIN_GOAL_AMOUNT = 0.001; // Minimum goal amount in ETH
 
   /**
    * Publishes project to blockchain
@@ -26,10 +26,11 @@ export const StateContextProvider = ({ children }) => {
   const publishProject = async (form) => {
     try {
       
-      const dateNow = new Date().getTime()
-      const deadlineDate = new Date(form.deadline).getTime()
-      const duration = Math.floor(( deadlineDate - dateNow ) / 1000)
+      const dateNow = new Date().getTime() // Date now
+      const deadlineDate = new Date(form.deadline).getTime() // Date of deadline
+      const duration = Math.floor(( deadlineDate - dateNow ) / 1000) // Calculate duration between and convert to seconds
 
+      // Publish project to blockchain
       const data = await createCampaign([
         duration,
         form.goal,
@@ -37,18 +38,27 @@ export const StateContextProvider = ({ children }) => {
         form.description,
         form.image
       ]);
+
     } catch (error) {
-      console.log("contract call failure", error);
+      console.error("PUBLISH PROJECT FAILURE", error);
     }
   };
 
-  const withdrawFunds = async (campaignID) => {
-    const data = await contract.call("withdrawFunds", campaignID)
+  /**
+   * Withdraws funds from id
+   * @param {number} campaignID 
+   */
+  const withdrawProjectFunds = async (campaignID) => {
+    try {
+      const data = await withdrawFunds([ campaignID ]);
+    } catch (err) {
+      console.error("WITHDRAW FAILURE", err);
+    }
   }
 
   /**
    * Get all projects on blockchain
-   * @returns {array} All projects
+   * @returns {array} projects
    */
   const getProjects = async (includeFinished = false) => {
     const projects = await contract.call('getAllCampaigns');
@@ -64,9 +74,9 @@ export const StateContextProvider = ({ children }) => {
       pId: project.campaignID,
     }));
 
-    const filteredDeletedProjects = parsedProjects.filter((project) => project.pId != 0 );
+    const filteredDeletedProjects = parsedProjects.filter((project) => project.pId != 0 ); // Filters deleted projects
 
-    const currentlyRunningProjects = filteredDeletedProjects.filter((project) => project.deadline >= (Date.now() / 1000) );
+    const currentlyRunningProjects = filteredDeletedProjects.filter((project) => project.deadline >= (Date.now() / 1000) ); // Filters finished projects
     
     if (includeFinished) {
       return filteredDeletedProjects;
@@ -89,13 +99,25 @@ export const StateContextProvider = ({ children }) => {
 
   /**
    * Get all projects that include string in title or description
+   * TODO: optimize with back-end database
    * @param {string} search 
-   * @returns {array}
+   * @returns {array} - [0]: Results filtered by title, [1]: Results filtered by description
    */
   const getSearchProjects = async (search) => {
-    if (!search || search == null) search = "";
-    const allProjects = await getProjects();
 
+    if (!search || search == null) search = ""; // Check if search contains content
+
+    const allProjects = await getProjects(); // Get all projects
+
+    /**
+     * Filters projects.
+     * For every projects title:
+     * 1. remove special characters and make them to the standard latin alphabet (e.g. Ö -> O)
+     * 2. make upper case
+     * 3. remove spaces
+     * 4. do steps 1-3 for search prompt too
+     * 5. if title and search prompt match after alteration, keep project in array
+     */
     const filteredByTitle = allProjects.filter((project) => 
       unidecode(
         project.title
@@ -110,6 +132,9 @@ export const StateContextProvider = ({ children }) => {
       )
     );
 
+    /**
+     * Same as above but with the project description
+     */
     const filteredByDescription = allProjects.filter((project) => 
       unidecode(
         project.description
@@ -127,10 +152,13 @@ export const StateContextProvider = ({ children }) => {
     return [filteredByTitle, filteredByDescription];
   };
 
-
+  /**
+   * Donate ETH amount to project
+   * @param {number} campaignID 
+   * @param {number} amount - in ETH
+   */
   const donate = async (campaignID, amount) => {
     const data = await contract.call('donateToCampaign', campaignID, { value: ethers.utils.parseEther(amount)});
-    return data;
   };
 
   // const getDonations = async (pId) => {
@@ -174,7 +202,7 @@ export const StateContextProvider = ({ children }) => {
         MIN_GOAL_AMOUNT,
         donate,
         getDonations,
-        withdrawFunds
+        withdrawProjectFunds
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 // Modules
-import React from 'react';
+import React, { useLayoutEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Components
 import Navbar from './components/navbar/Navbar';
@@ -25,14 +26,13 @@ import './assets/fonts/Recursive_VF_1.084.woff2';
 const App = () => {
   return (
     <div className='app'>
-
+      
       {/* Navbar */}
       <Navbar/>
 
       <div className='page-container'>
-
         {/* Pages container */}
-        <div style={{flex: 1, minHeight: "100vh", height: "100%", display: "flex"}}>
+        <div style={{flex: 1, minHeight: "100vh", height: "100%", display: "flex", overflow: "hidden"}}>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/create-project' element={<CreateProject/>}/>
@@ -47,6 +47,7 @@ const App = () => {
         <Footer/>
 
       </div>
+
 
     </div>
   );

@@ -1,7 +1,7 @@
 // Modules
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { calculateBarPercentage, daysLeft, daysLeftExactly } from '../utils';
+import { calculateBarPercentage, daysLeftExactly } from '../utils';
 import { toSvg } from '../utils/jdenticon';
 
 // Context
@@ -22,25 +22,16 @@ import NotificationWindow from '../components/global/NotificationWindow';
 const ProjectDetails = () => {
 
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address, MIN_GOAL_AMOUNT } = useStateContext();
+  const { donate, getDonations, contract, address, MIN_GOAL_AMOUNT } = useStateContext(); // Get contract info
+  const { state } = useLocation(); // Get project details from previous page / location
 
-  // Get project object from previous page
-  const { state } = useLocation();
+  const [isLoading, setIsLoading] = useState(false); // True when donation is loading
+  const [isLoadingDonators, setIsLoadingDonators] = useState(true);// True when donators list is loading
+  
+  const [amount, setAmount] = useState(''); // The amount the user wants to donate
 
-  // True when donation is loading
-  const [isLoading, setIsLoading] = useState(false);
-
-  // True when donators list is loading
-  const [isLoadingDonators, setIsLoadingDonators] = useState(true);
-
-  // The amount the user wants to donate
-  const [amount, setAmount] = useState('');
-
-  // Array containing the donators
-  const [donators, setDonators] = useState([]);
-
-  // Array containing the donators
-  const [remainingDays, setRemainingDays] = useState(daysLeftExactly(state.deadline));
+  const [remainingDays, setRemainingDays] = useState(daysLeftExactly(state.deadline)); // How much time is left
+  const percentage = calculateBarPercentage(state.goal, state.amountCollected); // Calculate progress bar percentage
 
   // Notification window options
   const [notificationWindowOptions, setNotificationWindowOptions] = useState({
@@ -49,35 +40,31 @@ const ProjectDetails = () => {
     buttonText: "Okay"
   });
 
-  // Calculate percentage
-  const percentage = calculateBarPercentage(state.goal, state.amountCollected);
+  const [donators, setDonators] = useState([]); // Array containing the donators
 
   // Get donators list
   const fetchDonators = async () => {
 
-    // Display "Loader" component
-    setIsLoadingDonators(true);
+    setIsLoadingDonators(true); // Display "Loader" component
 
-    // Get donators of project
-    const data = await getDonations(state.pId);
-    
-    // Put donators of project into local array
-    setDonators(data);
+    const data = await getDonations(state.pId); // Get donators of project
+    setDonators(data); // Put donators of project into local array
 
-    // Don't display "Loader" anymore
-    setIsLoadingDonators(false);
+    setIsLoadingDonators(false); // Don't display "Loader" anymore
     
   };
 
   useEffect(() => {
-    // If contract connected, fetch project donators
-    if(contract) fetchDonators();
+    // If contract connected, fetch project and donators
+    if(contract) {
+      fetchDonators();
+    }
 
     const interval = setInterval(() => {
-      setRemainingDays(daysLeftExactly(state.deadline))
+      setRemainingDays(daysLeftExactly(state.deadline)) // Refreshes "time left" every second
     }, 1000);
     
-  }, [contract, address]);
+  }, [contract, address]); 
 
   // On "Donate!" button press
   const handleDonate = async () => {
@@ -85,44 +72,47 @@ const ProjectDetails = () => {
       amount >= MIN_GOAL_AMOUNT
       && address
     ) {
-      // Show fullscreen loader while donation is loading
-      setIsLoading(true);
+      
+      setIsLoading(true); // Show fullscreen loader while donation is loading
 
-      // Donate amount to project
-      await donate(state.pId, amount); 
+      await donate(state.pId, amount); // Donate amount to project
+      setIsLoading(false); // Hide fullscreen loader when donation complete
 
-      // Hide fullscreen loader when donation complete
-      setIsLoading(false);
+      navigate('/');// Navigate to home page
 
-      // Navigate to home page
-      navigate('/');
     } else if (
       amount >= MIN_GOAL_AMOUNT
       && !address
     ) {
+
       setNotificationWindowOptions({
         ...notificationWindowOptions, 
         show: true,
         text: "Please log in."
       })
+
     } else if (
       amount < MIN_GOAL_AMOUNT
       && address
     ) {
+
       setNotificationWindowOptions({
         ...notificationWindowOptions, 
         show: true,
         text: "Please specify ETH amount you want to donate."
       })
+
     } else if (
       amount < MIN_GOAL_AMOUNT
       && !address
     ) {
+
       setNotificationWindowOptions({
         ...notificationWindowOptions, 
         show: true,
         text: "Please log in and specify ETH amount you want to donate."
       })
+
     }
 
   };
@@ -243,6 +233,7 @@ const ProjectDetails = () => {
         }
         
       </div>
+
     </div>
   );
 };

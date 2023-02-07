@@ -20,37 +20,28 @@ import './Profile.css';
 const Profile = () => {
 
   const navigate = useNavigate();
-  const { disconnect, address, contract, getUserProjects, connect, withdrawFunds } = useStateContext();
+  const { disconnect, address, contract, getUserProjects, connect, withdrawProjectFunds } = useStateContext(); // Get contract info
 
-  // True when projects are loading
-  const [isLoadingProjects, setIsLoadingProjects] = useState(false);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(false); // True when projects are loading
 
-  // Array with all projects
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]); // Array with all projects
 
   // Get user projects from blockchain
   const fetchProjects = async () => {
 
-    // Display "Loader" component
-    setIsLoadingProjects(true);
+    setIsLoadingProjects(true); // Display "Loader" component
+  
+    const data = await getUserProjects(); // Get user projects
+    setProjects(data); // Put projects into local array
 
-    // Get user projects
-    const data = await getUserProjects();
-
-    // Put projects into local array
-    setProjects(data);
-
-    // Don't display "Loader" anymore
-    setIsLoadingProjects(false);
+    setIsLoadingProjects(false); // Don't display "Loader" anymore
 
   };
 
   // "Disconnect Address" button handler
   const handleDisconnectUser = () => {
     disconnect()
-
-    // Navigat to homepage
-    navigate('/')
+    navigate('/') // Navigat to homepage
   }
 
   /**
@@ -75,7 +66,7 @@ const Profile = () => {
    */
   const handleWithdraw = (project) => {
     if (isFullfilled(project)) {
-      withdrawFunds(project.id)
+      withdrawProjectFunds(project.id)
     } else {
       // TODO: Error notification
     }

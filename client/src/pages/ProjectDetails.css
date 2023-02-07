@@ -31,6 +31,7 @@
   border-radius: 16px;
   background-color: #0D0C12;
   position: relative;
+  animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .project-details > .section-0 > .image-container > .image {
@@ -38,7 +39,6 @@
   height: 100%; 
   object-fit: cover;
   border-radius: 16px;
-  
 }
 
 .project-details > .section-0 > .info-container {
@@ -110,8 +110,7 @@
   display: flex;
   justify-content: space-between;
   border: 2px solid #1E1D23;
-  border-bottom: none;
-  border-radius: 16px 16px 0 0;
+  border-radius: 16px;
   background-color: #16151C;
   z-index: 1;
 }
@@ -148,11 +147,12 @@
 .project-details > .progress-container {
   background-color: #0D0C12;
   border: 2px solid #1E1D23;
-  border-radius: 0 0 16px 16px;
+  border-radius: 16px 16px;
   padding: 2px;
   height: 32px;
   margin-bottom: 32px;
   z-index: 1;
+  margin-top: 8px;
 }
 
 .project-details > .progress-container > .progress {
@@ -162,6 +162,7 @@
   height: 100%;
   border-radius: 12px;
   min-width: 32px;
+  animation: scale-in-hor-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .project-details > .section-2 > input {
@@ -177,6 +178,12 @@
   padding: 0 16px;
   min-width: 100px;
   max-width: 200px;
+  
+}
+
+.project-details > .section-2 > input:focus {
+  border-radius: var(--px-border);
+  border: 2px solid #4b4a4f;
   
 }
 
@@ -215,4 +222,38 @@
   z-index: 1000;
   backdrop-filter: blur(8px);
   background-color: #0d0c12e7;
+}
+
+.project-details > .card-grid {
+  margin-top: 128px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  align-self: stretch;
+}
+
+@keyframes scale-in-center {
+  0% {
+    filter: blur(8px);
+            transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(0px);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-hor-left {
+  0% {
+    transform: scaleX(0);
+    transform-origin: 0% 0%;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: 0% 0%;
+    opacity: 1;
+  }
 }

@@ -21,9 +21,7 @@ import './Navbar.css';
 const Navbar = () => {
 
   const navigate = useNavigate();
-
-  // Get connect function and address variable
-  const { connect, address } = useStateContext();
+  const { connect, address } = useStateContext(); // Get connect function and address variable
 
   // Handle click on "Create Project" or "Connect to MetaMask" button
   const handleClick = () => {

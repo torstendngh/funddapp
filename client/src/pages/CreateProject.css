@@ -60,12 +60,25 @@
   gap: 16px;
 }
 
-.create-project > .creator-container > .content > .side-by-side > * {
-  flex: 1;
-}
-
 .create-project > .creator-container > .content > .devider {
   height: 2px;
   background-color: #ffffff0a;
   margin: 0 16px;
 }
+
+.create-project > .creator-container > .content > .side-by-side > .imagePreview {
+  background-color: #ffffff0a;
+  height: 91px;
+  width: 91px;
+  border-radius: 16px;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+.create-project > .creator-container > .content > .side-by-side > .imagePreview:hover {
+  transform: scale(3) translateX(30px);
+  border-radius: 6px;
+  z-index: 1000;
+  box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+}
+ 
