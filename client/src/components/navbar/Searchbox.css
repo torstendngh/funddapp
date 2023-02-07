@@ -13,7 +13,7 @@
 }
 
 .searchbox > svg {
-  margin: calc(calc(40px - 18px)/2);
+  margin: calc(calc(40px - 24px)/2);
   display: flex;
   align-items: center;
   justify-content: center;

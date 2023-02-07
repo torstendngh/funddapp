@@ -10,6 +10,35 @@ export const daysLeft = (deadline) => {
 };
 
 /**
+ * Works out exact time left until deadline in HH-MM-SS format
+ * @param {date} deadline 
+ * @returns {number}
+ */
+export const daysLeftExactly = (deadline) => {
+  let seconds = deadline - (Date.now() / 1000);
+
+  //days 
+  let days = Math.floor(seconds/(24*3600));
+  seconds -= days*24*3600; 
+  
+  //hours 
+  let hours = Math.floor(seconds/3600); 
+  seconds -= hours*3600; 
+  
+  //minutes 
+  let minutes = Math.floor(seconds/60); 
+  seconds -= minutes*60;
+
+  days = (days > 0 ? (days + "d ") : "").toString()
+  hours = hours.toString().padStart(2, 0)
+  minutes = minutes.toString().padStart(2, 0)
+  seconds = seconds.toString().padStart(2, 0)
+  seconds = Math.floor(seconds).toString().padStart(2, 0)
+  
+  return days + hours + ":" + minutes + ":" + seconds;
+};
+
+/**
  * Calculates percentage for progress bar
  * @param {number} goal 
  * @param {number} raisedAmount 

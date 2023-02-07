@@ -61,9 +61,7 @@ const Navbar = () => {
       >
         { address ?
           <>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-              <path id="Path_1" data-name="Path 1" d="M11.883,3.007,12,3a1,1,0,0,1,.993.883L13,4v7h7a1,1,0,0,1,.993.883L21,12a1,1,0,0,1-.883.993L20,13H13v7a1,1,0,0,1-.883.993L12,21a1,1,0,0,1-.993-.883L11,20V13H4a1,1,0,0,1-.993-.883L3,12a1,1,0,0,1,.883-.993L4,11h7V4a1,1,0,0,1,.883-.993L12,3Z" transform="translate(-3 -3)" fill="currentColor"/>
-            </svg>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 5a.75.75 0 0 0-.743.648l-.007.102v3.5h-3.5a.75.75 0 0 0-.102 1.493l.102.007h3.5v3.5a.75.75 0 0 0 1.493.102l.007-.102v-3.5h3.5a.75.75 0 0 0 .102-1.493l-.102-.007h-3.5v-3.5A.75.75 0 0 0 12 7Z" fill="currentColor"/></svg>
             Create Project
           </>
           : 

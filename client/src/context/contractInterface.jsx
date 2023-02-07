@@ -3,7 +3,7 @@ import React, { useContext, createContext } from 'react';
 import { useAddress, useContract, useMetamask, useDisconnect, useContractWrite, useChainId } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 import unidecode from 'unidecode';
-import { daysLeft } from '../utils';
+import { dummyDonatorList } from './dummyDonatorList';
 
 const StateContext = createContext();
 
@@ -50,24 +50,29 @@ export const StateContextProvider = ({ children }) => {
    * Get all projects on blockchain
    * @returns {array} All projects
    */
-  const getProjects = async () => {
+  const getProjects = async (includeFinished = false) => {
     const projects = await contract.call('getAllCampaigns');
 
     const parsedProjects = projects.map((project, i) => ({
       owner: project.owner,
       title: project.title,
       description: project.description,
-
       goal: ethers.utils.formatEther(project.raisingGoal.toString()),
       deadline: project.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(project.amountCollected.toString()),
       image: project.image,
-      pId: project.campaignID
+      pId: project.campaignID,
     }));
 
-    const currentlyRunningProjects = parsedProjects.filter((project) => project.deadline >= (Date.now() / 1000) );
+    const filteredDeletedProjects = parsedProjects.filter((project) => project.pId != 0 );
 
-    return currentlyRunningProjects;
+    const currentlyRunningProjects = filteredDeletedProjects.filter((project) => project.deadline >= (Date.now() / 1000) );
+    
+    if (includeFinished) {
+      return filteredDeletedProjects;
+    } else {
+      return currentlyRunningProjects;
+    }
   };
 
   /**
@@ -128,20 +133,30 @@ export const StateContextProvider = ({ children }) => {
     return data;
   };
 
+  // const getDonations = async (pId) => {
+  //   const donations = await contract.call('getDonators', pId);
+  //   const numberOfDonations = donations[0].length;
+
+  //   const parsedDonations = [];
+
+  //   for(let i = 0; i < numberOfDonations; i++) {
+  //     parsedDonations.push({
+  //       donator: donations[0][i],
+  //       donation: ethers.utils.formatEther(donations[1][i].toString())
+  //     });
+  //   }
+
+  //   return parsedDonations;
+  // };
+
+  /**
+   * Returns dummy donator list
+   * TODO: Implement real donator list on back-end
+   * @param {number} pId - This does nothing and is only for parity with actual function
+   * @returns {object}
+   */
   const getDonations = async (pId) => {
-    const donations = await contract.call('getDonators', pId);
-    const numberOfDonations = donations[0].length;
-
-    const parsedDonations = [];
-
-    for(let i = 0; i < numberOfDonations; i++) {
-      parsedDonations.push({
-        donator: donations[0][i],
-        donation: ethers.utils.formatEther(donations[1][i].toString())
-      });
-    }
-
-    return parsedDonations;
+    return dummyDonatorList;
   };
 
   return (

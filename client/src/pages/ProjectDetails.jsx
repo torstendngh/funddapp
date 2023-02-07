@@ -1,7 +1,7 @@
 // Modules
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { calculateBarPercentage, daysLeft } from '../utils';
+import { calculateBarPercentage, daysLeft, daysLeftExactly } from '../utils';
 import { toSvg } from '../utils/jdenticon';
 
 // Context
@@ -14,6 +14,7 @@ import DonatorRow from '../components/projectDetails/DonatorRow'
 
 // CSS
 import './ProjectDetails.css';
+import NotificationWindow from '../components/global/NotificationWindow';
 
 /**
  * Project details page component
@@ -38,8 +39,15 @@ const ProjectDetails = () => {
   // Array containing the donators
   const [donators, setDonators] = useState([]);
 
-  // Calculate remaining days
-  const remainingDays = daysLeft(state.deadline);
+  // Array containing the donators
+  const [remainingDays, setRemainingDays] = useState(daysLeftExactly(state.deadline));
+
+  // Notification window options
+  const [notificationWindowOptions, setNotificationWindowOptions] = useState({
+    show: false,
+    text: "",
+    buttonText: "Okay"
+  });
 
   // Calculate percentage
   const percentage = calculateBarPercentage(state.goal, state.amountCollected);
@@ -64,22 +72,59 @@ const ProjectDetails = () => {
   useEffect(() => {
     // If contract connected, fetch project donators
     if(contract) fetchDonators();
+
+    const interval = setInterval(() => {
+      setRemainingDays(daysLeftExactly(state.deadline))
+    }, 1000);
+    
   }, [contract, address]);
 
   // On "Donate!" button press
   const handleDonate = async () => {
+    if (
+      amount >= MIN_GOAL_AMOUNT
+      && address
+    ) {
+      // Show fullscreen loader while donation is loading
+      setIsLoading(true);
 
-    // Show fullscreen loader while donation is loading
-    setIsLoading(true);
+      // Donate amount to project
+      await donate(state.pId, amount); 
 
-    // Donate amount to project
-    await donate(state.pId, amount); 
+      // Hide fullscreen loader when donation complete
+      setIsLoading(false);
 
-    // Hide fullscreen loader when donation complete
-    setIsLoading(false);
+      // Navigate to home page
+      navigate('/');
+    } else if (
+      amount >= MIN_GOAL_AMOUNT
+      && !address
+    ) {
+      setNotificationWindowOptions({
+        ...notificationWindowOptions, 
+        show: true,
+        text: "Please log in."
+      })
+    } else if (
+      amount < MIN_GOAL_AMOUNT
+      && address
+    ) {
+      setNotificationWindowOptions({
+        ...notificationWindowOptions, 
+        show: true,
+        text: "Please specify ETH amount you want to donate."
+      })
+    } else if (
+      amount < MIN_GOAL_AMOUNT
+      && !address
+    ) {
+      setNotificationWindowOptions({
+        ...notificationWindowOptions, 
+        show: true,
+        text: "Please log in and specify ETH amount you want to donate."
+      })
+    }
 
-    // Navigate to home page
-    navigate('/');
   };
 
   return (
@@ -91,6 +136,16 @@ const ProjectDetails = () => {
         <div className='loading-screen'>
           <Loader text={`Donating ${amount || "0.001"} ETH to project "${state.title}"`}/>
         </div>
+      }
+
+      {/* Notification if no amount specified */}
+      {
+        notificationWindowOptions.show &&
+        <NotificationWindow
+          handleButtonClick={() => setNotificationWindowOptions({...notificationWindowOptions, show: false})}
+          text={notificationWindowOptions.text}
+          buttonText={notificationWindowOptions.buttonText}
+        />
       }
       
       <div className='section-0'>
@@ -143,7 +198,7 @@ const ProjectDetails = () => {
           <p className='value'>{state.amountCollected} ETH</p>
         </div>
         <div>
-          <p className='title'>Days left</p>
+          <p className='title'>Time left</p>
           <p className='value'>{remainingDays}</p>
         </div>
       </div>
@@ -165,7 +220,7 @@ const ProjectDetails = () => {
           height="64px"
           width="400px"
         >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM9 11a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" fill="#fff"/><path d="M2 7.25A2.25 2.25 0 0 1 4.25 5h12.5A2.25 2.25 0 0 1 19 7.25v7.5A2.25 2.25 0 0 1 16.75 17H4.25A2.25 2.25 0 0 1 2 14.75v-7.5Zm2.25-.75a.75.75 0 0 0-.75.75V8h.75A.75.75 0 0 0 5 7.25V6.5h-.75Zm-.75 6h.75a2.25 2.25 0 0 1 2.25 2.25v.75h8v-.75a2.25 2.25 0 0 1 2.25-2.25h.75v-3h-.75a2.25 2.25 0 0 1-2.25-2.25V6.5h-8v.75A2.25 2.25 0 0 1 4.25 9.5H3.5v3Zm14-4.5v-.75a.75.75 0 0 0-.75-.75H16v.75c0 .414.336.75.75.75h.75Zm0 6h-.75a.75.75 0 0 0-.75.75v.75h.75a.75.75 0 0 0 .75-.75V14Zm-14 .75c0 .414.336.75.75.75H5v-.75a.75.75 0 0 0-.75-.75H3.5v.75Z" fill="#fff"/><path d="M4.401 18.5A2.999 2.999 0 0 0 7 20h10.25A4.75 4.75 0 0 0 22 15.25V10c0-1.11-.603-2.08-1.5-2.599v7.849a3.25 3.25 0 0 1-3.25 3.25H4.401Z" fill="currentColor"/></svg>
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.815 12.197-7.532 1.256a.5.5 0 0 0-.386.318L2.3 20.728c-.248.64.421 1.25 1.035.943l18-9a.75.75 0 0 0 0-1.342l-18-9c-.614-.307-1.283.304-1.035.943l2.598 6.957a.5.5 0 0 0 .386.319l7.532 1.255a.2.2 0 0 1 0 .394Z" fill="currentColor"/></svg>
           Donate!
         </AccentButton>
       </div>

@@ -1,0 +1,43 @@
+.notification-window {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  background-color: #0d0c12e7;
+}
+
+.notification-window > .window {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #1E1D23;
+  border-bottom: none;
+  border-radius: 16px;
+  background-color: #16151C;
+  z-index: 1;
+  min-height: 40%;
+  min-width: 40%;
+  max-height: 80%;
+  max-width: 80%;
+  padding: 16px;
+}
+
+.notification-window > .window > .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  color: white;
+  font-size: 24px;
+  padding: 32px;
+  flex-shrink: 1;
+  gap: 16px;
+}
