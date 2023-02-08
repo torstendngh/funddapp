@@ -85,6 +85,9 @@ const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClic
         {truncatedOwnerString || defaultValues.address}
       </div>
 
+      {/* Project amounts */}
+      <p className='details'>{amountCollected} / {goal} ETH</p>
+
       { hasWithdrawButton ?
         <>
           <div style={{height: "8px"}}></div>
