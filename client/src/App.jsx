@@ -20,6 +20,7 @@ import './App.css';
 // Fonts
 import './assets/fonts/Recursive_VF_1.084.woff2';
 
+
 /**
  * Main app page
  */
@@ -30,24 +31,20 @@ const App = () => {
       {/* Navbar */}
       <Navbar/>
 
+      {/* Pages container */}
       <div className='page-container'>
-        {/* Pages container */}
-        <div style={{flex: 1, minHeight: "100vh", height: "100%", display: "flex", overflow: "hidden"}}>
-          <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='/create-project' element={<CreateProject/>}/>
-            <Route path='/project-details/:id' element={<ProjectDetails/>}/>
-            <Route path='/get-started' element={<GetStarted/>}/>
-            <Route path='/profile' element={<Profile/>}/>
-            <Route path='/search' element={<Search/>}/>
-          </Routes>
-        </div>
-        
-        {/* Footer */}
-        <Footer/>
-
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/create-project' element={<CreateProject/>}/>
+          <Route path='/project-details/:id' element={<ProjectDetails/>}/>
+          <Route path='/get-started' element={<GetStarted/>}/>
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/search' element={<Search/>}/>
+        </Routes>
       </div>
-
+        
+      {/* Footer */}
+      <Footer/>
 
     </div>
   );

@@ -123,10 +123,10 @@
 
 .card > .goalReachedLabel {
   position: absolute;
-  padding: 16px;
+  padding: 8px 16px;
   background: var(--accent-gradient);
   border-radius: 32px;
-  top: 0;
+  top: 8px;
   right: -16px;
   transform: rotateZ(15deg);
   box-shadow: rgba(0, 0, 0, 0.9) 0px 10px 55px;

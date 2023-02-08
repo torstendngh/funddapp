@@ -142,6 +142,7 @@
   justify-content: flex-end;
   margin-bottom: 32px;
   z-index: 1;
+  margin-top: 32px;
 }
 
 .project-details > .progress-container {
@@ -150,7 +151,6 @@
   border-radius: 16px 16px;
   padding: 2px;
   height: 32px;
-  margin-bottom: 32px;
   z-index: 1;
   margin-top: 8px;
 }
@@ -224,12 +224,21 @@
   background-color: #0d0c12e7;
 }
 
-.project-details > .card-grid {
-  margin-top: 128px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+.project-details > .goal-reached {
   gap: 16px;
-  align-self: stretch;
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  z-index: 1;
+  margin-top: 8px;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'wght' 400, 'slnt' 0, 'CRSV' 0;
+  color: white;
+  font-size: 32px;
+  background: var(--accent-gradient);
+  border: 2px solid #ffffff38;
+  animation: heartbeat 1.5s ease-in-out both;
 }
 
 @keyframes scale-in-center {
@@ -255,5 +264,29 @@
     transform: scaleX(1);
     transform-origin: 0% 0%;
     opacity: 1;
+  }
+}
+
+@keyframes heartbeat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
   }
 }
