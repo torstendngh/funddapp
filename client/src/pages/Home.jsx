@@ -116,7 +116,7 @@ const Home = () => {
         {/* Map projects to "Card" components */}
         {
           projects.map((project) => <Card
-            key={project.id}
+            key={project.pId}
             owner={project.owner}
             title={project.title}
             image={project.image}

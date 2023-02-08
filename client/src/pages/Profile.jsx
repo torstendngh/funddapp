@@ -51,12 +51,12 @@ const Profile = () => {
    */
   const isFullfilled = (project) => {
     if (
-      project.deadline >= (Date.now() / 1000)
-      && project.goal >= project.target
+      project.amountCollected >= project.goal
+      && project.pId != 0
     ) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -64,9 +64,10 @@ const Profile = () => {
    * @param {object} project 
    * @returns {boolean}
    */
-  const handleWithdraw = (project) => {
+  const handleWithdraw = async (project) => {
     if (isFullfilled(project)) {
-      withdrawProjectFunds(project.id)
+      await withdrawProjectFunds(project.pId)
+      
     } else {
       // TODO: Error notification
     }
@@ -109,7 +110,7 @@ const Profile = () => {
         {/* Map user projects to "Card" components */}
         {
           projects.map((project) => <Card
-            key={project.id}
+            key={project.pId}
             owner={project.owner}
             title={project.title}
             image={project.image}
@@ -117,8 +118,8 @@ const Profile = () => {
             goal={project.goal}
             amountCollected={project.amountCollected}
             handleClick={() => handleNavigateToProject(navigate, project)}
-            hasWithdrawButton={ false }
-            handleWithdraw={() => handleWithdraw(project.id)}
+            hasWithdrawButton={ isFullfilled(project) }
+            handleWithdraw={() => handleWithdraw(project)}
           />)
         }
 

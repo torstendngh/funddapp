@@ -10,7 +10,7 @@ const StateContext = createContext(); // Create a react context
 export const StateContextProvider = ({ children }) => {
   const { contract, isLoading, error } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D"); // Connect with contract
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign'); // Get creation function
-  const { mutateAsync: withdrawFunds } = useContractWrite(contract, "withdrawFunds"); // Get withdrawFunds function
+  const { mutateAsync: withdrawFunds } = useContractWrite(contract, 'withdrawFunds'); // Get withdrawFunds function
 
   const address = useAddress(); // Get user address
   const connect = useMetamask(); // Get connect with Metamask function
@@ -49,11 +49,7 @@ export const StateContextProvider = ({ children }) => {
    * @param {number} campaignID 
    */
   const withdrawProjectFunds = async (campaignID) => {
-    try {
-      const data = await withdrawFunds([ campaignID ]);
-    } catch (err) {
-      console.error("WITHDRAW FAILURE", err);
-    }
+    const data = await contract.call('withdrawFunds', campaignID)
   }
 
   /**

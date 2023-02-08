@@ -66,7 +66,7 @@ const Search = () => {
         {/* Map project search results to "Card" component */}
         {
           results[0].map((project) => <Card
-            key={project.id}
+            key={project.pId}
             owner={project.owner}
             title={project.title}
             image={project.image}
@@ -91,7 +91,7 @@ const Search = () => {
         {/* Map project search results to "Card" component */}
         {
           results[1].map((project) => <Card
-            key={project.id}
+            key={project.pId}
             owner={project.owner}
             title={project.title}
             image={project.image}
