@@ -3,29 +3,29 @@
 ![](readme/chainfundingLogo.png)
 
 <p align="center">
-  <strong>DApp Projekt</strong><br>
+  <strong>🖥️ DApp Projekt</strong><br>
   Technische Hochschule Würzburg-Schweinfurt<br/>
   Modul: Blockchain und Smart Contracts<br/>
 </p>
 
-## Inhalt
+## 📖 Content
 
-- [Client](#client)
-  - [Packages and technologies](#packages-and-technologies)
-  - [Folder structure](#folder-structure)
-  - [Page components](#page-components)
-  - [Reusable components](#reusable-components)
-  - [Contexts](#contexts)
-- [Web 3](#web-3)
-- [TODO](#todo)
-- [Bugs](#bugs)
-- [Authors](#authors)
+- [Client](#-client)
+  - [Packages and technologies](#-packages-and-technologies)
+  - [Folder structure](#-folder-structure)
+  - [Page components](#-page-components)
+  - [Reusable components](#-reusable-components)
+  - [Contexts](#-contexts)
+- [Web 3](#-web-3)
+- [TODO](#-todo)
+- [Bugs](#-bugs)
+- [Authors](#-authors)
 
-## Client
+## 💻 Client
 
 This is the front-end of the application.
 
-### Packages and technologies
+### 📦 Packages and technologies
 
 - [React](https://reactjs.org/) - For constructing the front-end
 - [React Router](https://reactrouter.com/en/main) - Basic routing between pages
@@ -38,7 +38,7 @@ This is the front-end of the application.
 - [NodeJS](https://nodejs.org/en/) - Package manager
 - [NPM](https://www.npmjs.com/) - Package manager
 
-### Folder structure
+### 📁 Folder structure
 
 - [`client`](/client/) - All client files
 - [`client/src`](/client/src) - All source files and main entry of React app
@@ -52,7 +52,7 @@ This is the front-end of the application.
 - [`client/src/temp`](/client/src/temp) - Old smart contracts
 - [`client/src/utils`](/client/src/utils) - Utility files and jdenticon
 
-### Page components
+### 🗃️ Page components
 
 #### React starting point
 
@@ -72,7 +72,7 @@ All page components are stored in [`client/src/pages`](/client/src/pages)
 - [`ProjectDetails.jsx`](/client/src/pages/ProjectDetails.jsx) - Shows project details if user clicked on a card. Gets information from previous screen passed in the url and React `useLocation` hook
 - [`Search.jsx`](/client/src/pages/Search.jsx) - Lets user search projects and displays matches in title and description. Gets search prompt from navbar [`Searchbox.jsx`](/client/src/components/navbar/Searchbox.jsx) component passed in the the  and React `useLocation` hook
 
-### Reusable components
+### 🗂️ Reusable components
 
 #### Global
 
@@ -105,12 +105,15 @@ Components in [`client/src/components/createProject`](/client/src/components/cre
 
 - [`TextField.jsx`](/client/src/components/createProject/TextField.jsx) - Text field with label and icon
 
-### Contexts
+### 🌯 Contexts
 
 - [contractInterface.jsx](/client/src/context/contractInterface.jsx) - Context that offers child components functions and variables of the smart contract
 - [dummyDonators.js](/client/src/context/dummyDonatorList.js) - Temporary file that gets used in [contractInterface.jsx](/client/src/context/contractInterface.jsx) for displaying project donators. An old contract version saved the donators but it used too much gas. Not implemented yet in current contract.
 
-## Web 3
+## 🕸️ Web 3
 
+## ✅ TODO
 
-## Other
+## 🐛 Bugs
+
+## 🖋️ Authors
