@@ -67,7 +67,6 @@ const Profile = () => {
   const handleWithdraw = async (project) => {
     if (isFullfilled(project)) {
       await withdrawProjectFunds(project.pId)
-      
     } else {
       // TODO: Error notification
     }

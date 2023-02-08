@@ -17,7 +17,7 @@ import './AccentButton.css';
  * Main button component
  * @param {Props} props
  */
-const AccentButton = ({ children, handleClick, buttonType, height, width }) => {
+const AccentButton = ({ children, handleClick = undefined, buttonType, height, width }) => {
   return (
     <button className='accent-button' onClick={handleClick} type={buttonType} style={{ minHeight: height || "44px", minWidth: width || "44px" }}>
       {children}

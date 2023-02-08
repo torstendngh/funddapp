@@ -147,7 +147,6 @@ Smart contract was deployes with [Thirdweb](https://thirdweb.com/) and the dashb
 - React doesn't reset scroll on new route load
 - User sometimes disconnects randomly
 - User can't connect sometimes (might just be the dev environment)
-- Metamask shows failure when project is made even though it was successfull
 
 ## 🖋️ Authors
 

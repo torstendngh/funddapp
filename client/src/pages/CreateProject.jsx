@@ -11,6 +11,7 @@ import { useStateContext } from "../context/contractInterface";
 import Loader from '../components/global/Loader';
 import AccentButton from '../components/global/AccentButton';
 import TextField from '../components/createProject/TextField'
+import NotificationWindow from '../components/global/NotificationWindow';
 
 // CSS
 import './CreateProject.css';
@@ -24,6 +25,13 @@ const CreateProject = () => {
   const { publishProject, MIN_GOAL_AMOUNT } = useStateContext(); // Get contract info
 
   const [isLoadingCreation, setIsLoadingCreation] = useState(false); // When the project is getting created this turns true to show "Loader" component
+
+  // Notification window options
+  const [notificationWindowOptions, setNotificationWindowOptions] = useState({
+    show: false,
+    text: "",
+    buttonText: "Okay"
+  });
 
   // Form to be sent for project creation
   const [form, setForm] = useState({
@@ -44,20 +52,35 @@ const CreateProject = () => {
 
     e.preventDefault(); // Important! Stop default behaviour of form "submit" button
 
+    
+
     checkIfImage(form.image, async (exists) => {
 
       // Check if URL points to valid image
-      if(exists && form.goal >= MIN_GOAL_AMOUNT) {
+      if(
+        exists && form.goal >= MIN_GOAL_AMOUNT
+        && form.title != ''
+        && form.description != ''
+        && form.goal != ''
+        && form.deadline != ''
+        && form.image != ''
+      ) {
 
         setIsLoadingCreation(true); // Show "Loader" component
 
         await publishProject({ ...form, goal: ethers.utils.parseUnits(form.goal, 18)}); // Publish project
+        
         setIsLoadingCreation(false); // Hide "Loader" again
 
         navigate('/'); // Navigate to homepage
         
       } else {
         setForm({ ...form, image: '' }); // Reset image form
+        setNotificationWindowOptions({
+          ...notificationWindowOptions, 
+          show: true,
+          text: "Image URL invalid."
+        })
       }
     });
 
@@ -66,6 +89,14 @@ const CreateProject = () => {
   return (
     <div className='create-project'>
       <div className='creator-container'>
+
+        { notificationWindowOptions.show &&
+          <NotificationWindow
+            handleButtonClick={() => setNotificationWindowOptions({...notificationWindowOptions, show: false})}
+            text={notificationWindowOptions.text}
+            buttonText={notificationWindowOptions.buttonText}
+          />
+        }
 
         <div className='titlebar'>
           <p>Create New Project</p>

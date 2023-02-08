@@ -8,9 +8,7 @@ import { dummyDonatorList } from './dummyDonatorList';
 const StateContext = createContext(); // Create a react context
 
 export const StateContextProvider = ({ children }) => {
-  const { contract, isLoading, error } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D"); // Connect with contract
-  const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign'); // Get creation function
-  const { mutateAsync: withdrawFunds } = useContractWrite(contract, 'withdrawFunds'); // Get withdrawFunds function
+  const { contract } = useContract("0xa3162CAfDFbC006A2350C575872042ea22F38c9D"); // Connect with contract
 
   const address = useAddress(); // Get user address
   const connect = useMetamask(); // Get connect with Metamask function
@@ -24,24 +22,12 @@ export const StateContextProvider = ({ children }) => {
    * @param {object} form 
    */
   const publishProject = async (form) => {
-    try {
-      
-      const dateNow = new Date().getTime() // Date now
-      const deadlineDate = new Date(form.deadline).getTime() // Date of deadline
-      const duration = Math.floor(( deadlineDate - dateNow ) / 1000) // Calculate duration between and convert to seconds
+    
+    const dateNow = new Date().getTime() // Date now
+    const deadlineDate = new Date(form.deadline).getTime() // Date of deadline
+    const duration = Math.floor(( deadlineDate - dateNow ) / 1000) // Calculate duration between and convert to seconds
 
-      // Publish project to blockchain
-      const data = await createCampaign([
-        duration,
-        form.goal,
-        form.title,
-        form.description,
-        form.image
-      ]);
-
-    } catch (error) {
-      console.error("PUBLISH PROJECT FAILURE", error);
-    }
+    const data = await contract.call("createCampaign", duration, form.goal, form.title, form.description, form.image)
   };
 
   /**
@@ -86,7 +72,7 @@ export const StateContextProvider = ({ children }) => {
    * @returns {array} All projects by user
    */
   const getUserProjects = async () => {
-    const allProjects = await getProjects();
+    const allProjects = await getProjects(true);
 
     const filteredProjects = allProjects.filter((project) => project.owner === address);
 
