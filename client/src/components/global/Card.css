@@ -7,7 +7,7 @@
   flex-direction: column;
   min-width: 200px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   backdrop-filter: blur(16px);
 }
 
@@ -43,6 +43,12 @@
   font-size: 16px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 500, 'slnt' 0, 'CRSV' 0;
   transition: font-variation-settings 0.2s ease;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .card > .owner {

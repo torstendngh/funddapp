@@ -1,7 +1,7 @@
 // Modules
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleNavigateToProject } from '../utils'
+import { handleNavigateToProject, calculateBarPercentage } from '../utils'
 
 // Context
 import { useStateContext } from '../context/contractInterface';
@@ -29,6 +29,7 @@ const Home = () => {
    * TODO: algorithm to only show most interesting projects to user
    */
   const [projects, setProjects] = useState([]);
+  const [closeToFinishingProjects, setCloseToFinishingProjects] = useState([]);
 
   // Get all projects from blockchain
   const fetchProjects = async () => {
@@ -37,6 +38,8 @@ const Home = () => {
 
     const data = await getProjects(); // Get all projects
     setProjects(data); // Put projects into local array
+
+    setCloseToFinishingProjects(data.filter((project) => calculateBarPercentage(project.goal, project.amountCollected) >= 50))
 
     setIsLoadingProjects(false); // Don't display "Loader" anymore
 
@@ -103,6 +106,35 @@ const Home = () => {
         Get Started
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.001c5.524 0 10 4.477 10 10s-4.476 10-10 10c-5.522 0-10-4.477-10-10s4.478-10 10-10Zm.781 5.469-.084-.073a.75.75 0 0 0-.883-.007l-.094.08-.072.084a.75.75 0 0 0-.007.883l.08.094 2.719 2.72H7.75l-.102.006a.75.75 0 0 0-.641.642L7 12l.007.102a.75.75 0 0 0 .641.641l.102.007h6.69l-2.72 2.72-.073.085a.75.75 0 0 0 1.05 1.05l.083-.073 4.002-4 .072-.085a.75.75 0 0 0 .008-.882l-.08-.094-4-4.001-.085-.073.084.073Z" fill="currentColor"/></svg>
       </AccentButton>
+
+      <div className='title'>Close to finishing</div>
+
+      {/* Projects list */}
+      <div className='card-grid'>
+
+        {/* Show "Loader" if loading projects */}
+        {
+          isLoadingProjects &&
+          <Loader/>
+        }
+
+        {/* Map projects to "Card" components */}
+        {
+          closeToFinishingProjects.map((project) => <Card
+            key={project.pId}
+            owner={project.owner}
+            title={project.title}
+            image={project.image}
+            deadline={project.deadline}
+            goal={project.goal}
+            amountCollected={project.amountCollected}
+            handleClick={() => handleNavigateToProject(navigate, project)}
+          />)
+        }
+
+      </div>
+
+      <div className='title'>All projects</div>
 
       {/* Projects list */}
       <div className='card-grid'>

@@ -20,6 +20,13 @@
   top: -100px;
 }
 
+.home > .title {
+  margin-top: 128px;
+  margin-bottom: 64px;
+  font-size: 42px;
+  font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 200, 'slnt' 0, 'CRSV' 0;
+}
+
 .home > .big-title {
   margin-top: 128px;
   font-size: 64px;
@@ -59,7 +66,6 @@
 }
 
 .home > .card-grid {
-  margin-top: 128px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 16px;

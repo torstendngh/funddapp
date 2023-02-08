@@ -72,7 +72,8 @@ const Card = ({ title, owner, goal, amountCollected, deadline, image, handleClic
 
       {/* Project image */}
       <div className='image-container'>
-        {image && <img src={image} alt={title || defaultValues.title} />}
+        {/* Not sure why 'alt' needs such a weird conversion, but doesn't throw error like this */}
+        {image && <img src={image} alt={`${title || defaultValues.title}`}/>}
       </div>
 
       {/* Project title */}

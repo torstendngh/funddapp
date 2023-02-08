@@ -225,10 +225,10 @@ const ProjectDetails = () => {
           isLoadingDonators && <Loader/>
         }
 
-        {/* Map donators to "DonatorRow" component */}
+        {/* Map donators to "DonatorRow" component / TODO: MATH.RANDOM KEY IS PLACEHOLDER */}
         {
           donators.length > 0 && donators.map((donator, i) => (
-            <DonatorRow user={donator.donator} amount={donator.donation}/>
+            <DonatorRow user={donator.donator} amount={donator.donation} key={donator.donator + Math.random()}/>
           ))
         }
         
