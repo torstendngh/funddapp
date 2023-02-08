@@ -28,8 +28,8 @@ const Home = () => {
    * Array with all projects
    * TODO: algorithm to only show most interesting projects to user
    */
-  const [projects, setProjects] = useState([]);
-  const [closeToFinishingProjects, setCloseToFinishingProjects] = useState([]);
+  const [projects, setProjects] = useState([]); // All projects
+  const [closeToFinishingProjects, setCloseToFinishingProjects] = useState([]); // Close to finishing projects
 
   // Get all projects from blockchain
   const fetchProjects = async () => {

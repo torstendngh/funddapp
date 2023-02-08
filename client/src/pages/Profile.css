@@ -13,6 +13,21 @@
   gap: 32px;
 }
 
+.profile > .loading-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  background-color: #0d0c12e7;
+}
+
 .profile > .title {
   font-size: 42px;
   font-variation-settings: 'MONO' 0, 'CASL' 0, 'wght' 200, 'slnt' 0, 'CRSV' 0;

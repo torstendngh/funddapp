@@ -21,6 +21,8 @@ import NotificationWindow from '../components/global/NotificationWindow';
  */
 const ProjectDetails = () => {
 
+  
+
   const navigate = useNavigate();
   const { donate, getDonations, contract, address, MIN_GOAL_AMOUNT } = useStateContext(); // Get contract info
   const { state } = useLocation(); // Get project details from previous page / location
@@ -63,7 +65,7 @@ const ProjectDetails = () => {
     const interval = setInterval(() => {
       setRemainingDays(daysLeftExactly(state.deadline)) // Refreshes "time left" every second
     }, 1000);
-    
+
   }, [contract, address]); 
 
   // On "Donate!" button press

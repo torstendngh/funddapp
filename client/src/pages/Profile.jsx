@@ -23,8 +23,14 @@ const Profile = () => {
   const { disconnect, address, contract, getUserProjects, connect, withdrawProjectFunds } = useStateContext(); // Get contract info
 
   const [isLoadingProjects, setIsLoadingProjects] = useState(false); // True when projects are loading
+  const [isLoadingWithdraw, setIsLoadingWithdraw] = useState({
+    loading: false,
+    projectName: '',
+    withdrawAmount: ''
+  }); // loading true when loading withdraw with options
 
   const [projects, setProjects] = useState([]); // Array with all projects
+  const [finishedProjects, setFinishedProjects] = useState([]); // Array with all projects
 
   // Get user projects from blockchain
   const fetchProjects = async () => {
@@ -33,6 +39,8 @@ const Profile = () => {
   
     const data = await getUserProjects(); // Get user projects
     setProjects(data); // Put projects into local array
+
+    setFinishedProjects(data.filter((project) => project.amountCollected >= project.goal))
 
     setIsLoadingProjects(false); // Don't display "Loader" anymore
 
@@ -66,7 +74,18 @@ const Profile = () => {
    */
   const handleWithdraw = async (project) => {
     if (isFullfilled(project)) {
+      setIsLoadingWithdraw({
+        loading: true,
+        projectName: project.title,
+        withdrawAmount: project.amountCollected
+      })
       await withdrawProjectFunds(project.pId)
+      setIsLoadingWithdraw({
+        loading: false,
+        projectName: '',
+        withdrawAmount: '',
+      })
+      navigate('/');// Navigate to home page
     } else {
       // TODO: Error notification
     }
@@ -83,6 +102,15 @@ const Profile = () => {
 
   return (
     <div className='profile'>
+
+      {/* Fullscreen withdrawing loader */}
+      {
+        isLoadingWithdraw.loading &&
+        <div className='loading-screen'>
+          <Loader text={`Withdrawing ${isLoadingWithdraw.withdrawAmount} ETH from project "${isLoadingWithdraw.projectName}"`}/>
+        </div>
+      }
+
       <div className='title'>My Profile</div>
       <div className='address-container'>
         <div className='title'>Account address</div>
@@ -95,7 +123,41 @@ const Profile = () => {
         Disconnect Address
       </AccentButton>
 
-      <div className='title'>My Projects ({projects.length})</div>
+      {
+        finishedProjects.length > 0 &&
+        <>
+          <div className='title'>My finished Projects ({finishedProjects.length})</div>
+
+          {/* User projects list */}
+          <div className='card-grid'>
+
+            {/* Show "Loader" while loading projects */}
+            {
+              isLoadingProjects &&
+              <Loader/>
+            }
+
+            {/* Map user projects to "Card" components */}
+            {
+              finishedProjects.map((project) => <Card
+                key={project.pId}
+                owner={project.owner}
+                title={project.title}
+                image={project.image}
+                deadline={project.deadline}
+                goal={project.goal}
+                amountCollected={project.amountCollected}
+                handleClick={() => handleNavigateToProject(navigate, project)}
+                hasWithdrawButton={ isFullfilled(project) }
+                handleWithdraw={() => handleWithdraw(project)}
+              />)
+            }
+
+          </div>
+        </>
+      }
+
+      <div className='title'>All of my Projects ({projects.length})</div>
 
       {/* User projects list */}
       <div className='card-grid'>
