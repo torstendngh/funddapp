@@ -37,6 +37,7 @@ This is the front-end of the application.
 - [Microsoft fluent icons](https://fluenticons.co/) - UI icons
 - [NodeJS](https://nodejs.org/en/) - Package manager
 - [NPM](https://www.npmjs.com/) - Package manager
+- [Recursive](https://www.recursive.design/) - Cool font used everywhere
 
 ### 📁 Folder structure
 
@@ -112,8 +113,43 @@ Components in [`client/src/components/createProject`](/client/src/components/cre
 
 ## 🕸️ Web 3
 
+The smart contract is in [`/web3/contracts`](/web3/contracts) and originates from [here](https://github.com/BestFighter8/CrowdFunding_Dapp/blob/master/contracts/CrowdfundingCampaign.sol).
+
+Smart contract was deployes with [Thirdweb](https://thirdweb.com/) and the dashboard of the contract can be found [here](https://thirdweb.com/goerli/0xa3162CAfDFbC006A2350C575872042ea22F38c9D/)
+
 ## ✅ TODO
+
+- Store project details in back-end a database, using an id to match it with counterpar in the smart contract
+- Implement refund better with a web worker or something like that
+- Optimize search by using back-end database instead of smart contract
+- Store more user data in back-end database, like name, bio, etc.
+- Redo `GetStarted.jsx` page with more details and tutorials
+- Create `About.jsx` page
+- Create algorythm that shows user more relevant projects
+- Project tags like "technnology", "social" etc.
+- More notifications on actions
+- Better form checking so no wrong values can be passed
+- Also allow [Coinbase Wallet](https://www.coinbase.com/wallet) to be connected
+- Allow user to use more than one image for project
+- Reimplement donators list in `ProjectDetails.jsx` page and smart contract
+- Allow users to save favorites in `Card.jsx` component and `ProjectDetails.jsx` page
+- Share button on `ProjectDetails.jsx` page
+- Report button functionality on on `ProjectDetails.jsx` page
+- Better input boxes for numerical values
+- Refactor CSS and and move all colors into theme files
+- Ability to switch dark/light theme
+- Move all strings into langage JSON files so language switching is possible
+- Make UI responsive
+- Mobile layout
 
 ## 🐛 Bugs
 
+- React doesn't reset scroll on new route load
+- User sometimes disconnects randomly
+- User can't connect sometimes (might just be the dev environment)
+- Metamask shows failure when project is made even though it was successfull
+
 ## 🖋️ Authors
+
+- Client, design and Web3 integration: Torsten O'Donoghue
+- Smart Contract: Arsenii Holovanov ([Smart Contract Github](https://github.com/BestFighter8/CrowdFunding_Dapp))
